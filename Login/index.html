@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Fundación Si Se Puede</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .contenedor-login {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .titulo-principal {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    #google-login {
+      background-color: #db4437;
+      color: white;
+    }
+
+    #google-login:hover {
+      background-color: #c23321;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+
+    .logout {
+      margin-top: 20px;
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .logout:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor-login">
+    <h1 class="titulo-principal">Iniciar Sesión</h1>
+
+    <form id="login-form">
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <button id="google-login">Iniciar sesión con Google</button>
+
+    <p>¿No tienes cuenta? <a href="signup.html">Regístrate aquí</a></p>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const supabase = createClient(
+      'https://ipxeamegdgrlpvhvbuqo.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlweGVhbWVnZGdybHB2aHZidXFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MTUwMTEsImV4cCI6MjA2OTM5MTAxMX0.zo5s7w71UlsedidrNIIFrE5T_B44E0jBjYGe84NuuoQ'
+    );
+
+    const loginForm = document.getElementById('login-form');
+    const googleBtn = document.getElementById('google-login');
+    const container = document.querySelector('.contenedor-login');
+
+    const cerrarSesionBtn = document.createElement('button');
+    cerrarSesionBtn.textContent = 'Cerrar sesión';
+    cerrarSesionBtn.className = 'logout';
+
+    cerrarSesionBtn.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      location.reload();
+    });
+
+    const avatar = document.createElement('img');
+    avatar.className = 'avatar';
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      loginForm.style.display = 'none';
+      googleBtn.style.display = 'none';
+
+      if (user.user_metadata?.avatar_url) {
+        avatar.src = user.user_metadata.avatar_url;
+        container.prepend(avatar);
+      }
+
+      container.appendChild(cerrarSesionBtn);
+    }
+
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          alert('❌ Error: ' + error.message);
+        } else {
+          alert('Inicio de sesión exitoso');
+          window.location.href = '../index.html'; // ✅ Redirige correctamente
+        }
+      });
+    }
+
+    if (googleBtn) {
+      googleBtn.addEventListener('click', async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin + '/index.html'
+          }
+        });
+
+        if (error) {
+          alert('❌ Error con Google: ' + error.message);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

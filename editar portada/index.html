@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Portada</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    padding: 2rem;
+    color: #333;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+  }
+
+  form {
+    max-width: 480px;
+    margin: auto;
+    background-color: #f8f8f8;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  label {
+    font-weight: bold;
+    margin-top: 1rem;
+    display: block;
+    color: #555;
+  }
+
+  input[type="file"],
+  input[type="text"] {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+  }
+
+  button {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.2rem;
+    width: 100%;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  #status {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+
+  /* Vista previa de imagen opcional */
+  #preview {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  #preview img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+</style>
+
+</head>
+<body>
+  <h2>Subir imagen al carrusel</h2>
+  <form id="uploadForm">
+    <label>Selecciona una imagen:</label><br>
+    <input type="file" id="imageInput" accept="image/*" required><br><br>
+
+    <label>Título (opcional):</label><br>
+    <input type="text" id="titleInput"><br><br>
+
+    <label>Pie de foto (opcional):</label><br>
+    <input type="text" id="captionInput"><br><br>
+
+    <button type="submit">Subir imagen</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    const supabase = createClient('https://ipxeamegdgrlpvhvbuqo.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlweGVhbWVnZGdybHB2aHZidXFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MTUwMTEsImV4cCI6MjA2OTM5MTAxMX0.zo5s7w71UlsedidrNIIFrE5T_B44E0jBjYGe84NuuoQ')
+
+    const form = document.getElementById('uploadForm')
+    const status = document.getElementById('status')
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+
+      const file = document.getElementById('imageInput').files[0]
+      const title = document.getElementById('titleInput').value
+      const caption = document.getElementById('captionInput').value
+      const filePath = `portada/${Date.now()}-${file.name}`
+
+      // Subir imagen al bucket
+      const { data, error: uploadError } = await supabase.storage
+        .from('portada')
+        .upload(filePath, file)
+
+      if (uploadError) {
+        status.textContent = '❌ Error al subir la imagen'
+        console.error(uploadError)
+        return
+      }
+
+      // Obtener URL pública
+      const { data: publicUrl } = supabase.storage
+        .from('portada')
+        .getPublicUrl(filePath)
+
+      // Guardar datos en tabla
+      const { error: dbError } = await supabase
+        .from('portada_carrusel')
+        .insert([{
+          url: publicUrl.publicUrl,
+          activo: true,
+          titulo: title || null,
+          pie_de_foto: caption || null
+        }])
+
+      status.textContent = dbError
+        ? '❌ Error al guardar en la base de datos'
+        : '✅ Imagen subida y guardada con éxito'
+    })
+  </script>
+</body>
+</html>

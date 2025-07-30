@@ -1,0 +1,165 @@
+:root {
+  --rojo: #b70000;
+  --blanco: #ffffff;
+  --negro: #000000;
+  --gris: #f2f2f2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--gris);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: var(--rojo);
+  color: var(--blanco);
+  padding: 20px 40px;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Búsqueda minimalista */
+.busqueda-minimalista {
+  position: absolute;
+  left: 20px;
+  top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: var(--blanco);
+  font-style: italic;
+  cursor: pointer;
+}
+
+.buscar-texto {
+  border-bottom: none;
+}
+
+.icono-lupa {
+  width: 18px;
+  height: 18px;
+  fill: var(--blanco);
+}
+
+/* Título centrado */
+.titulo-principal {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Menú hamburguesa */
+.menu-icon {
+  position: absolute;
+  right: 20px;
+  top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-icon div {
+  width: 25px;
+  height: 3px;
+  background-color: var(--blanco);
+  transition: all 0.3s ease;
+}
+
+/* Panel lateral desde la derecha */
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: var(--rojo);
+  color: var(--blanco);
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  transition: right 0.3s ease;
+  z-index: 1001;
+  padding-top: 80px;
+}
+
+.side-panel.show {
+  right: 0;
+}
+
+.panel-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-menu a {
+  padding: 15px 20px;
+  text-decoration: none;
+  color: var(--blanco);
+  font-weight: bold;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.panel-menu a:hover {
+  background-color: #900000;
+}
+
+/* Fondo oscuro */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}
+
+/* Menú horizontal principal */
+.menu-horizontal {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background-color: var(--blanco);
+  padding: 15px 0;
+}
+
+.menu-horizontal a {
+  text-decoration: none;
+  color: var(--rojo);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.menu-horizontal a:hover {
+  text-decoration: underline;
+}
+
+/* Contenido */
+.contenido {
+  flex: 1;
+  padding: 40px;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--negro);
+  color: var(--blanco);
+  text-align: center;
+  padding: 15px;
+}
