@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Misión - Fundación Si Se Puede</title>
+  <style>
+    :root {
+      --rojo: #b70000;
+      --azul: #007bff;
+      --blanco: #ffffff;
+      --gris: #f2f2f2;
+      --negro: #000000;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: var(--gris);
+      color: var(--negro);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--rojo);
+      color: var(--blanco);
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .menu-icon {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .menu-icon div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--blanco);
+    }
+
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: var(--rojo);
+      color: var(--blanco);
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+      transition: right 0.3s ease;
+      z-index: 1001;
+      padding-top: 60px;
+    }
+
+    .side-panel.show {
+      right: 0;
+    }
+
+    .panel-menu {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-menu a {
+      padding: 15px 20px;
+      text-decoration: none;
+      color: var(--blanco);
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .panel-menu a:hover {
+      background-color: #900000;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .contenido {
+      flex: 1;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contenido img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .contenido h2 {
+      font-size: 2rem;
+      color: var(--rojo);
+      margin-bottom: 20px;
+    }
+
+    .contenido p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #333;
+      text-align: justify;
+    }
+
+    footer {
+      background-color: var(--negro);
+      color: var(--blanco);
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Misión de la Fundación
+    <div class="menu-icon" onclick="togglePanel()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <!-- Panel lateral -->
+  <div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+  <div class="side-panel" id="sidePanel">
+    <nav class="panel-menu">
+      <a href="../index.html">Inicio</a>
+      <a href="../vision/index.html">Visión</a>
+      <a href="../somos/index.html">Quiénes Somos</a>
+      <a href="../contacto/index.html">Contáctanos</a>
+      <a href="../editar portada/index.html">Editar Portada</a>
+      <a href="../añadir publicaciones/index.html">Añadir Publicaciones</a>
+      <a href="../publicaciones y feed/index.html">Publicaciones y Feed</a>
+      <a href="../login/index.html">Cerrar Sesión</a>
+    </nav>
+  </div>
+
+  <section class="contenido">
+    <img src="../src/mision.jpg" alt="Imagen de misión" />
+    <h2>Nuestra Misión</h2>
+    <p>
+      Impulsar el bienestar integral de las personas de escasos recursos en la provincia de Esmeraldas, mediante acciones solidarias, sostenibles y comunitarias, que promuevan la equidad social, el acceso a servicios básicos y la participación activa en la mejora de su entorno. Desde el año 2020, trabajamos hombro a hombro con la comunidad, atendiendo con humanidad y compromiso las necesidades urgentes de nuestro pueblo.
+    </p>
+  </section>
+
+  <footer>
+    © 2020 Fundación Si Se Puede
+  </footer>
+
+  <script>
+    function togglePanel() {
+      document.getElementById('sidePanel').classList.toggle('show');
+      document.getElementById('overlay').classList.toggle('show');
+    }
+
+    function closePanel() {
+      document.getElementById('sidePanel').classList.remove('show');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

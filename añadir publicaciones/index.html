@@ -1,93 +1,312 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Añadir Publicación - Fundación</title>
+  <meta charset="UTF-8">
+  <title>Añadir Publicación</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f8ff;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: linear-gradient(to right, #0033a0, #cc0000);
-      color: white;
-      text-align: center;
-      padding: 1rem 0;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 2rem auto;
+      font-family: Arial, sans-serif;
       padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
     }
-
-    label {
-      display: block;
-      margin: 1rem 0 0.5rem;
-      font-weight: bold;
-    }
-
     input, textarea {
       width: 100%;
-      padding: 0.8rem;
+      margin-bottom: 1rem;
+      padding: 0.7rem;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
     }
-
-    textarea {
-      resize: vertical;
-    }
-
-    .boton {
-      background-color: #0033a0;
+    button {
+      padding: 0.7rem 1.2rem;
+      background-color: #007BFF;
       color: white;
-      padding: 0.8rem 1.2rem;
       border: none;
-      border-radius: 4px;
-      margin-top: 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+    #status {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 800px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .galeria-imagenes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .cuadro-miniatura {
+      width: 150px;
+      height: 150px;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border 0.3s;
+    }
+    .cuadro-miniatura:hover {
+      border: 2px solid #007BFF;
+    }
+    .cuadro-miniatura img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .close {
+      float: right;
+      font-size: 1.5rem;
+      font-weight: bold;
       cursor: pointer;
     }
-
-    .boton:hover {
-      background-color: #cc0000;
-    }
-
-    .logo-fundacion {
-      width: 120px;
-      margin-top: 10px;
+    #previewImagenes img {
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Añadir Publicación</h1>
-    <p>Fundación Esmeraldas Solidaria</p>
-    <!-- Si tienes un logo, puedes añadirlo aquí -->
-    <!-- <img src="logo.png" alt="Logo Fundación" class="logo-fundacion" /> -->
-  </header>
+  <form id="uploadForm">
+    <h2>Añadir Publicación</h2>
+    <input type="file" id="imageInput" accept="image/*">
+    <input type="text" id="titulo" placeholder="Título (obligatorio)" required>
+    <input type="text" id="subtitulo" placeholder="Subtítulo (opcional)">
+    <textarea id="descripcion" placeholder="Descripción (obligatoria)" required></textarea>
+    <button type="submit">Subir desde dispositivo</button>
+    <button type="button" id="abrirModal">Seleccionar desde la nube</button>
+    <p id="status"></p>
+  </form>
 
-  <div class="container">
-    <form id="form-publicacion">
-      <label for="titulo">Título</label>
-      <input type="text" id="titulo" name="titulo" required />
-
-      <label for="descripcion">Descripción</label>
-      <textarea id="descripcion" name="descripcion" rows="5" required></textarea>
-
-      <label for="imagen">Subir Imagen</label>
-      <input type="file" id="imagen" name="imagen" accept="image/*" required />
-
-      <button type="submit" class="boton">Publicar</button>
-    </form>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="cerrarModal">&times;</span>
+      <h3>Selecciona imágenes desde la nube</h3>
+      <div id="galeria" class="galeria-imagenes"></div>
+      <div id="previewImagenes" style="margin-top:1rem;"></div>
+      <button id="btnSubirDesdeNube" style="display:none;">Subir publicación desde la nube</button>
+    </div>
   </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    const supabase = createClient(
+      'https://ipxeamegdgrlpvhvbuqo.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlweGVhbWVnZGdybHB2aHZidXFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MTUwMTEsImV4cCI6MjA2OTM5MTAxMX0.zo5s7w71UlsedidrNIIFrE5T_B44E0jBjYGe84NuuoQ'
+    )
+
+    const form = document.getElementById('uploadForm')
+    const status = document.getElementById('status')
+    const galeria = document.getElementById('galeria')
+    const modal = document.getElementById('modal')
+    const abrirModal = document.getElementById('abrirModal')
+    const cerrarModal = document.getElementById('cerrarModal')
+    const tituloInput = document.getElementById('titulo')
+    const subtituloInput = document.getElementById('subtitulo')
+    const descripcionInput = document.getElementById('descripcion')
+    const btnSubirDesdeNube = document.getElementById('btnSubirDesdeNube')
+    const previewImagenes = document.getElementById('previewImagenes')
+
+    let imagenSeleccionada = null
+    window.imagenesSeleccionadas = []
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const file = document.getElementById('imageInput').files[0]
+
+      if (!file) {
+        status.textContent = '❌ No se seleccionó ninguna imagen'
+        return
+      }
+
+      const cleanName = file.name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-zA-Z0-9.\-_]/g, '_')
+
+      const filePath = `${Date.now()}-${cleanName}`
+
+      const { error: uploadError } = await supabase.storage.from('portada').upload(filePath, file)
+
+      if (uploadError) {
+        status.textContent = '❌ Error al subir la imagen'
+        return
+      }
+
+      const { data: urlData } = supabase.storage.from('portada').getPublicUrl(filePath)
+      imagenSeleccionada = urlData.publicUrl
+
+      await guardarPublicacion()
+    })
+
+    async function guardarPublicacion() {
+      const titulo = tituloInput.value.trim()
+      const subtitulo = subtituloInput.value.trim()
+      const descripcion = descripcionInput.value.trim()
+
+      if (!imagenSeleccionada || !titulo || !descripcion) {
+        alert('❌ Faltan campos obligatorios')
+        return
+      }
+
+      const { data: userData } = await supabase.auth.getUser()
+      const usuario_id = userData?.user?.id
+
+      if (!usuario_id) {
+        alert('❌ Debes iniciar sesión para publicar')
+        return
+      }
+
+      const publicacion = {
+        imagen_url: imagenSeleccionada,
+        titulo,
+        subtitulo: subtitulo || null,
+        descripcion,
+        usuario_id
+      }
+
+      const { error } = await supabase.from('publicaciones').insert([publicacion])
+
+      if (error) {
+        console.error('❌ Error al guardar publicación:', error)
+        alert('❌ Error al guardar la publicación')
+      } else {
+        alert('✅ Publicación guardada correctamente')
+        tituloInput.value = ''
+        subtituloInput.value = ''
+        descripcionInput.value = ''
+        imagenSeleccionada = null
+        status.textContent = ''
+      }
+    }
+
+    abrirModal.addEventListener('click', async () => {
+      modal.style.display = 'block'
+      galeria.innerHTML = ''
+      previewImagenes.innerHTML = ''
+      window.imagenesSeleccionadas = []
+      btnSubirDesdeNube.style.display = 'none'
+
+      const { data, error } = await supabase.storage.from('portada').list('', { limit: 100 })
+
+      if (error || !Array.isArray(data)) {
+        galeria.innerHTML = '<p>Error al cargar imágenes</p>'
+        return
+      }
+
+      data.forEach(file => {
+        const { data: urlData } = supabase.storage.from('portada').getPublicUrl(file.name)
+        const contenedor = document.createElement('div')
+        contenedor.className = 'cuadro-miniatura'
+        contenedor.onclick = () => {
+          if (!window.imagenesSeleccionadas.includes(urlData.publicUrl)) {
+            window.imagenesSeleccionadas.push(urlData.publicUrl)
+            mostrarPreview()
+            btnSubirDesdeNube.style.display = 'inline-block'
+          }
+                  }
+
+        const img = document.createElement('img')
+        img.src = urlData.publicUrl
+        contenedor.appendChild(img)
+        galeria.appendChild(contenedor)
+      })
+    })
+
+    function mostrarPreview() {
+      previewImagenes.innerHTML = ''
+      window.imagenesSeleccionadas.forEach(url => {
+        const img = document.createElement('img')
+        img.src = url
+        img.style.width = '100px'
+        img.style.margin = '5px'
+        previewImagenes.appendChild(img)
+      })
+    }
+
+    btnSubirDesdeNube.addEventListener('click', async () => {
+      const titulo = tituloInput.value.trim()
+      const subtitulo = subtituloInput.value.trim()
+      const descripcion = descripcionInput.value.trim()
+
+      if (window.imagenesSeleccionadas.length === 0 || !titulo || !descripcion) {
+        alert('❌ Faltan campos obligatorios o imágenes')
+        return
+      }
+
+      const { data: userData } = await supabase.auth.getUser()
+      const usuario_id = userData?.user?.id
+
+      if (!usuario_id) {
+        alert('❌ Debes iniciar sesión para publicar')
+        return
+      }
+
+      const publicacion = {
+        imagenes_url: window.imagenesSeleccionadas,
+        titulo,
+        subtitulo: subtitulo || null,
+        descripcion,
+        usuario_id
+      }
+
+      const { error } = await supabase.from('publicaciones').insert([publicacion])
+
+      if (error) {
+        console.error('❌ Error al guardar publicación:', error)
+        alert('❌ Error al guardar la publicación')
+      } else {
+        alert('✅ Publicación guardada correctamente')
+        tituloInput.value = ''
+        subtituloInput.value = ''
+        descripcionInput.value = ''
+        window.imagenesSeleccionadas = []
+        mostrarPreview()
+        btnSubirDesdeNube.style.display = 'none'
+        modal.style.display = 'none'
+      }
+    })
+
+    cerrarModal.addEventListener('click', () => {
+      modal.style.display = 'none'
+    })
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none'
+      }
+    }
+  </script>
 </body>
 </html>

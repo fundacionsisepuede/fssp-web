@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visión - Fundación Si Se Puede</title>
+  <title>¿Quiénes Somos? - Fundación Si Se Puede</title>
   <style>
     :root {
       --rojo: #b70000;
       --azul: #160096;
       --blanco: #ffffff;
-      --gris: #f2f2f2;
+      --gris: #f9f9f9;
       --negro: #000000;
     }
 
@@ -24,19 +24,20 @@
     }
 
     header {
-      background-color: var(--azul);
+      background: linear-gradient(90deg, var(--azul), var(--rojo));
       color: var(--blanco);
-      padding: 20px;
+      padding: 25px;
       text-align: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
+      letter-spacing: 1px;
       position: relative;
     }
 
     .menu-icon {
       position: absolute;
       right: 20px;
-      top: 20px;
+      top: 25px;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -102,43 +103,56 @@
     .contenido {
       flex: 1;
       padding: 40px 20px;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: var(--blanco);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
 
     .contenido img {
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       margin-bottom: 30px;
     }
 
     .contenido h2 {
-      font-size: 2rem;
-      color: var(--azul);
+      font-size: 2.2rem;
+      color: var(--rojo);
       margin-bottom: 20px;
+      text-transform: uppercase;
     }
 
     .contenido p {
-      font-size: 1.1rem;
-      line-height: 1.6;
+      font-size: 1.15rem;
+      line-height: 1.7;
       color: #333;
       text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    .highlight {
+      color: var(--azul);
+      font-weight: bold;
     }
 
     footer {
-      background-color: var(--negro);
+      background-color: var(--azul);
       color: var(--blanco);
       text-align: center;
       padding: 20px;
+      font-size: 0.95rem;
     }
   </style>
 </head>
 <body>
   <header>
-    Visión de la Fundación
+    ¿Quiénes Somos?
     <div class="menu-icon" onclick="togglePanel()">
       <div></div>
       <div></div>
@@ -153,7 +167,7 @@
     <nav class="panel-menu">
       <a href="../index.html">Inicio</a>
       <a href="../mision/index.html">Misión</a>
-      <a href="../somos/index.html">Quiénes Somos</a>
+      <a href="../vision/index.html">Visión</a>
       <a href="../contacto/index.html">Contáctanos</a>
       <a href="../editar portada/index.html">Editar Portada</a>
       <a href="../añadir publicaciones/index.html">Añadir Publicaciones</a>
@@ -163,10 +177,16 @@
   </div>
 
   <section class="contenido">
-    <img src="../src/vision.jpg" alt="Imagen de visión" />
-    <h2>Nuestra Visión</h2>
+    <img src="../src/somos.jpg" alt="Imagen de la Fundación" />
+    <h2>Fundación Sí Se Puede</h2>
     <p>
-      Ser una fundación referente en Esmeraldas y a nivel nacional por su liderazgo en transformación social, construyendo un futuro más justo, solidario y digno, donde ninguna persona sea invisible y cada acción tenga un impacto real en la vida de quienes más lo necesitan.
+      Somos la Fundación Sí Se Puede, una organización sin fines de lucro nacida en el corazón de Esmeraldas en el año 2020, con el firme propósito de transformar realidades y devolver la esperanza a quienes más lo necesitan. Nos mueve la <span class="highlight">solidaridad</span>, la <span class="highlight">justicia social</span> y el <span class="highlight">compromiso</span> con nuestro pueblo.
+    </p>
+    <p>
+      Trabajamos directamente con comunidades vulnerables, brindando ayuda humanitaria en momentos de crisis —como la entrega de colchones, agua potable y otros recursos esenciales— y apoyando iniciativas que mejoran la calidad de vida de nuestra gente. Nuestra labor se enfoca en crear un Esmeraldas más <span class="highlight">unido</span>, <span class="highlight">fuerte</span> y <span class="highlight">resiliente</span>, donde nadie se quede atrás.
+    </p>
+    <p>
+      Creemos que con voluntad, trabajo colectivo y amor por nuestra tierra, <strong>¡sí se puede construir un mejor futuro para todos!</strong>
     </p>
   </section>
 

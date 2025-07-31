@@ -26,6 +26,7 @@
       <div></div>
       <div></div>
     </div>
+    
 
     <!-- Contenedor dinámico del perfil -->
     <div id="perfil-usuario" style="position: absolute; right: 60px; top: 15px;"></div>
@@ -35,7 +36,7 @@
   <nav class="menu-horizontal">
     <a href="mision/index.html">Misión</a>
     <a href="vision/index.html">Visión</a>
-    <a href="quienes-somos/index.html">Quiénes Somos</a>
+    <a href="somos/index.html">Quiénes Somos</a>
     <a href="contacto/index.html">Contáctanos</a>
   </nav>
 
@@ -46,9 +47,18 @@
       <div class="carousel-caption">Bienvenidos a la Fundación</div>
     </div>
   </div>
+  
 
   <!-- Cortina blanca que sube -->
   <div class="cortina-blanca" id="cortina"></div>
+  <!-- Publicaciones destacadas -->
+<section class="publicaciones-destacadas" id="publicacionesDestacadas">
+  <h2>Últimas Publicaciones</h2>
+  <div class="tarjetas-publicaciones" id="tarjetasPublicaciones">
+    <!-- Las tarjetas se insertarán dinámicamente -->
+  </div>
+</section>
+
 
   <!-- Panel lateral -->
   <div class="overlay" id="overlay" onclick="closePanel()"></div>
@@ -59,6 +69,7 @@
       <a href="login/index.html" id="login-link">Iniciar Sesión</a>
       <a href="editar portada/index.html">Editar Portada</a>
       <a href="añadir publicaciones/index.html">Añadir Publicaciones</a>
+      <a href="publicaciones y feed/index.html">Publicaciones y Feed</a>
       <div id="cerrar-lateral" style="text-align: center; margin-top: 20px;"></div>
     </nav>
   </div>
@@ -113,5 +124,10 @@
       }
     });
   </script>
+  <!-- Botón de Donación Fijo -->
+<a href="https://donorbox.org/apoya-a-fundacion-si-se-puede-juntos-transformamos-vidas" target="_blank" class="donar-fijo">
+  ❤️ Donar
+</a>
+
 </body>
 </html>

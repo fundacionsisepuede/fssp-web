@@ -102,4 +102,44 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   await cargarCarrusel();
+    const cargarPublicacionesDestacadas = async () => {
+    const { data, error } = await supabase
+      .from('publicaciones')
+      .select('titulo, descripcion, imagen_url')
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    if (error) {
+      console.error('❌ Error al cargar publicaciones:', error);
+      return;
+    }
+
+    const contenedor = document.getElementById("tarjetasPublicaciones");
+    if (!contenedor || !data || data.length === 0) return;
+
+    data.forEach(pub => {
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "tarjeta";
+      tarjeta.innerHTML = `
+        <img src="${pub.imagen_url}" alt="${pub.titulo}" />
+        <h3>${pub.titulo}</h3>
+        <p>${pub.descripcion}</p>
+      `;
+      contenedor.appendChild(tarjeta);
+    });
+
+    // Mostrar la sección cuando se sube la cortina
+    window.addEventListener("scroll", () => {
+      const cortina = document.getElementById("cortina");
+      const publicacionesDestacadas = document.getElementById("publicacionesDestacadas");
+      const cortinaBottom = parseFloat(getComputedStyle(cortina).bottom);
+
+      if (cortinaBottom >= 0) {
+        publicacionesDestacadas.classList.add("show");
+      }
+    });
+  };
+
+  await cargarPublicacionesDestacadas();
+
 });

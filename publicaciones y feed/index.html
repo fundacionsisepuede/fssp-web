@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publicaciones - Fundación Si Se Puede</title>
+  <style>
+    :root {
+      --rojo: #b70000;
+      --azul: #007bff;
+      --blanco: #ffffff;
+      --gris: #f2f2f2;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: var(--gris);
+    }
+
+    header {
+      background-color: var(--rojo);
+      color: var(--blanco);
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .feed-container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      position: relative;
+      background-color: var(--blanco);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h2 {
+      color: var(--azul);
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+
+    .card-content h3 {
+      color: #555;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      font-weight: normal;
+    }
+
+    .card-content p {
+      color: #333;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #666;
+      margin-top: 50px;
+      font-size: 1.2rem;
+    }
+
+    .carrusel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .carrusel img {
+      flex: 0 0 auto;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      scroll-snap-align: center;
+      margin-right: 10px;
+      border-radius: 0;
+    }
+
+    .card-options {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+
+    .options-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .options-menu {
+      position: absolute;
+      top: 30px;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    .options-menu button {
+      display: block;
+      width: 100%;
+      padding: 8px 12px;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    #edit-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #00000088;
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #edit-modal .modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;         /* Limita el alto al 90% de la ventana */
+  overflow-y: auto;         /* Permite scroll vertical si el contenido es largo */
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+
+    #edit-modal input, #edit-modal textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 1rem;
+    }
+
+    #edit-modal button {
+      margin-right: 10px;
+      padding: 8px 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .cuadro-miniatura {
+      display: inline-block;
+      margin: 5px;
+      position: relative;
+    }
+
+    .cuadro-miniatura img {
+      width: 120px;
+      height: auto;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <header>Publicaciones de la Fundación</header>
+  <div class="feed-container" id="feed"></div>
+
+  <!-- Modal de edición -->
+  <div id="edit-modal">
+    <div class="modal-content">
+      <h2>Editar publicación</h2>
+      <label>Título:</label>
+      <input type="text" id="edit-titulo">
+      <label>Subtítulo:</label>
+      <input type="text" id="edit-subtitulo">
+      <label>Descripción:</label>
+      <textarea id="edit-descripcion" rows="4"></textarea>
+      <h3>Selecciona nuevas imágenes desde la nube</h3>
+      <div id="edit-galeria"></div>
+      <div id="edit-previewImagenes" style="margin-top:1rem;"></div>
+      <button id="update-btn">✅ Actualizar publicación</button>
+      <button onclick="document.getElementById('edit-modal').style.display='none'">Cancelar</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const supabase = createClient(
+      'https://ipxeamegdgrlpvhvbuqo.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlweGVhbWVnZGdybHB2aHZidXFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4MTUwMTEsImV4cCI6MjA2OTM5MTAxMX0.zo5s7w71UlsedidrNIIFrE5T_B44E0jBjYGe84NuuoQ'
+    );
+
+    const feed = document.getElementById('feed');
+
+    async function cargarPublicaciones() {
+      const { data: publicaciones, error } = await supabase
+        .from('publicaciones')
+        .select('*')
+        .order('id', { ascending: false });
+
+      if (error) {
+        feed.innerHTML = `<p class="no-data">❌ Error al cargar publicaciones: ${error.message}</p>`;
+        console.error('Error al cargar publicaciones:', error);
+        return;
+      }
+
+      if (!publicaciones || publicaciones.length === 0) {
+        feed.innerHTML = `<p class="no-data">No hay publicaciones disponibles aún.</p>`;
+        return;
+      }
+
+      publicaciones.forEach(pub => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        let imagenesHTML = '';
+
+        if (pub.imagenes_url && Array.isArray(pub.imagenes_url)) {
+          imagenesHTML = `
+            <div class="carrusel">
+              ${pub.imagenes_url.map(url => `<img src="${url}" alt="Imagen de publicación">`).join('')}
+            </div>
+          `;
+        } else if (pub.imagen_url) {
+          imagenesHTML = `<img src="${pub.imagen_url}" alt="Imagen de publicación">`;
+        }
+
+        card.innerHTML = `
+          <div class="card-options">
+            <button class="options-btn">⋮</button>
+            <div class="options-menu">
+              <button class="delete-btn">🗑️ Eliminar publicación</button>
+              <button class="edit-btn">✏️ Editar publicación</button>
+            </div>
+          </div>
+          ${imagenesHTML}
+          <div class="card-content">
+            <h2>${pub.titulo}</h2>
+            ${pub.subtitulo ? `<h3>${pub.subtitulo}</h3>` : ''}
+            <p>${pub.descripcion}</p>
+          </div>
+        `;
+
+        const optionsBtn = card.querySelector('.options-btn');
+        const optionsMenu = card.querySelector('.options-menu');
+        optionsBtn.onclick = () => {
+          optionsMenu.style.display = optionsMenu.style.display === 'none' ? 'block' : 'none';
+        };
+
+        const deleteBtn = card.querySelector('.delete-btn');
+        deleteBtn.onclick = async () => {
+          const confirmDelete = confirm('¿Eliminar esta publicación? Esto no borra las imágenes de la nube.');
+          if (!confirmDelete) return;
+
+          const { error } = await supabase
+            .from('publicaciones')
+            .delete()
+                        .eq('id', pub.id);
+
+          if (error) {
+            alert('❌ Error al eliminar publicación');
+            console.error(error);
+          } else {
+            alert('✅ Publicación eliminada');
+            card.remove();
+          }
+        };
+
+        const editBtn = card.querySelector('.edit-btn');
+        editBtn.onclick = async () => {
+          document.getElementById('edit-modal').style.display = 'flex';
+          document.getElementById('edit-titulo').value = pub.titulo || '';
+          document.getElementById('edit-subtitulo').value = pub.subtitulo || '';
+          document.getElementById('edit-descripcion').value = pub.descripcion || '';
+
+          const galeriaEdit = document.getElementById('edit-galeria');
+          const previewEdit = document.getElementById('edit-previewImagenes');
+          galeriaEdit.innerHTML = '';
+          previewEdit.innerHTML = '';
+          window.imagenesEditadas = [];
+
+          const imagenesActuales = pub.imagenes_url || (pub.imagen_url ? [pub.imagen_url] : []);
+          imagenesActuales.forEach(url => {
+            window.imagenesEditadas.push(url);
+          });
+          mostrarPreviewEdit();
+
+          const { data: archivos, error: galeriaError } = await supabase.storage.from('portada').list('', { limit: 100 });
+
+          if (galeriaError || !Array.isArray(archivos)) {
+            galeriaEdit.innerHTML = '<p>Error al cargar imágenes</p>';
+            return;
+          }
+
+          archivos.forEach(file => {
+            const { data: urlData } = supabase.storage.from('portada').getPublicUrl(file.name);
+            const contenedor = document.createElement('div');
+            contenedor.className = 'cuadro-miniatura';
+            contenedor.onclick = () => {
+              if (!window.imagenesEditadas.includes(urlData.publicUrl)) {
+                window.imagenesEditadas.push(urlData.publicUrl);
+                mostrarPreviewEdit();
+              }
+            };
+
+            const img = document.createElement('img');
+            img.src = urlData.publicUrl;
+            contenedor.appendChild(img);
+            galeriaEdit.appendChild(contenedor);
+          });
+
+          function mostrarPreviewEdit() {
+            previewEdit.innerHTML = '';
+            window.imagenesEditadas.forEach((url, index) => {
+              const contenedor = document.createElement('div');
+              contenedor.className = 'cuadro-miniatura';
+              const img = document.createElement('img');
+              img.src = url;
+              contenedor.appendChild(img);
+
+              const quitar = document.createElement('button');
+              quitar.textContent = '❌';
+              quitar.style.position = 'absolute';
+              quitar.style.top = '0';
+              quitar.style.right = '0';
+              quitar.style.background = 'red';
+              quitar.style.color = 'white';
+              quitar.style.border = 'none';
+              quitar.style.borderRadius = '50%';
+              quitar.style.cursor = 'pointer';
+              quitar.onclick = () => {
+                window.imagenesEditadas.splice(index, 1);
+                mostrarPreviewEdit();
+              };
+
+              contenedor.style.position = 'relative';
+              contenedor.appendChild(quitar);
+              previewEdit.appendChild(contenedor);
+            });
+          }
+
+          document.getElementById('update-btn').onclick = async () => {
+            const nuevoTitulo = document.getElementById('edit-titulo').value.trim();
+            const nuevoSubtitulo = document.getElementById('edit-subtitulo').value.trim();
+            const nuevaDescripcion = document.getElementById('edit-descripcion').value.trim();
+            const nuevasImagenes = window.imagenesEditadas;
+
+            if (!nuevoTitulo || !nuevaDescripcion || nuevasImagenes.length === 0) {
+              alert('❌ Faltan campos obligatorios o imágenes');
+              return;
+            }
+
+            const { error: updateError } = await supabase
+              .from('publicaciones')
+              .update({
+                titulo: nuevoTitulo,
+                subtitulo: nuevoSubtitulo || null,
+                descripcion: nuevaDescripcion,
+                imagenes_url: nuevasImagenes
+              })
+              .eq('id', pub.id);
+
+            if (updateError) {
+              alert('❌ Error al actualizar publicación');
+              console.error(updateError);
+            } else {
+              alert('✅ Publicación actualizada');
+              location.reload();
+            }
+          };
+        };
+
+        feed.appendChild(card);
+      });
+    }
+
+    cargarPublicaciones();
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('edit-modal')) {
+        document.getElementById('edit-modal').style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>
