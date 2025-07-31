@@ -188,19 +188,19 @@
     }
 
     if (googleBtn) {
-      googleBtn.addEventListener('click', async () => {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: 'google',
-          options: {
-            redirectTo: 'https://fundacionsisepuede.github.io/fssp-web/index.html'
-          }
-        });
+  googleBtn.addEventListener('click', async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: 'https://fundacionsisepuede.github.io/fssp-web/' // ✅ Página principal del sitio
+      }
+    });
 
-        if (error) {
-          alert('❌ Error con Google: ' + error.message);
-        }
-      });
+    if (error) {
+      alert('❌ Error con Google: ' + error.message);
     }
+  });
+}
   </script>
 </body>
 </html>
