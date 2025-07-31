@@ -17,17 +17,21 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .header {
   background-color: var(--rojo);
   color: var(--blanco);
   padding: 20px 40px;
-  position: relative;
+  position: sticky;
+  top: 0;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
+  transition: transform 0.8s ease, opacity 0.8s ease;
 }
 
 /* Búsqueda minimalista */
@@ -42,10 +46,6 @@ body {
   color: var(--blanco);
   font-style: italic;
   cursor: pointer;
-}
-
-.buscar-texto {
-  border-bottom: none;
 }
 
 .icono-lupa {
@@ -69,6 +69,7 @@ body {
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  z-index: 1002;
 }
 
 .menu-icon div {
@@ -137,7 +138,12 @@ body {
   gap: 30px;
   background-color: var(--blanco);
   padding: 15px 0;
+  position: sticky;
+  top: 80px;
+  z-index: 999;
+  transition: transform 0.8s ease, opacity 0.8s ease;
 }
+
 
 .menu-horizontal a {
   text-decoration: none;
@@ -154,12 +160,90 @@ body {
 .contenido {
   flex: 1;
   padding: 40px;
+  min-height: 600px; /* fuerza espacio para que el footer se vea */
 }
+
 
 /* Footer */
 .footer {
   background-color: var(--negro);
   color: var(--blanco);
   text-align: center;
-  padding: 15px;
+  padding: 20px;
+  margin-top: auto;
+  z-index: 1;
+  position: relative;
 }
+
+
+/* Carrusel */
+.carrusel {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Texto sobre imagen */
+.carousel-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+/* Cortina blanca que sube */
+.cortina-blanca {
+  position: fixed;
+  bottom: -100vh;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--blanco);
+  z-index: 998; /* menor que el menú y el footer */
+  transition: bottom 0.8s ease;
+  pointer-events: none;
+}
+
+
+
+
+/* Cuando se activa el scroll */
+.header.scroll-up,
+.menu-horizontal.scroll-up {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.cortina-blanca.show {
+  bottom: 0;
+}
+

@@ -55,4 +55,51 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     cerrarLateral.appendChild(logoutBtn);
   }
+
+  // 💡 CARRUSEL DE PORTADAS
+  const cargarCarrusel = async () => {
+    const { data, error } = await supabase
+      .from('portadas')
+      .select('imagen_url, titulo, subtitulo')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('❌ Error al cargar portadas:', error);
+      return;
+    }
+
+    const carrusel = document.getElementById('carrusel');
+    if (!carrusel || !data || data.length === 0) {
+      carrusel.innerHTML = '<p style="text-align:center; color:red;">No hay portadas disponibles.</p>';
+      return;
+    }
+
+    carrusel.innerHTML = ''; // Limpiar contenido previo
+
+    data.forEach((portada, index) => {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+      if (index === 0) item.classList.add('active');
+
+      item.innerHTML = `
+        <img src="${portada.imagen_url}" alt="${portada.titulo}" class="slide">
+        <div class="carousel-caption" style="position:absolute; bottom:20px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:10px; border-radius:6px;">
+          <h3 style="margin:0;">${portada.titulo}</h3>
+          <p style="margin:0;">${portada.subtitulo || ''}</p>
+        </div>
+      `;
+      carrusel.appendChild(item);
+    });
+
+    let slideIndex = 0;
+    setInterval(() => {
+      const slides = document.querySelectorAll('.carousel-item');
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === slideIndex);
+      });
+      slideIndex = (slideIndex + 1) % slides.length;
+    }, 4000);
+  };
+
+  await cargarCarrusel();
 });
