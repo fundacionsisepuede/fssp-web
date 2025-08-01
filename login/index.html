@@ -192,7 +192,7 @@
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'https://fundacionsisepuede.github.io/fssp-web/' // ✅ Página principal del sitio
+        redirectTo: 'http://localhost:3000 ' // ✅ Página principal del sitio
       }
     });
 

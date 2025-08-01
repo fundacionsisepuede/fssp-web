@@ -1,66 +1,73 @@
+/* 🎨 Variables de color para usar en todo el sitio */
 :root {
-  --rojo: #b70000;
-  --blanco: #ffffff;
-  --negro: #000000;
-  --gris: #f2f2f2;
+  --rojo: #b70000;       /* Rojo institucional */
+  --blanco: white;     /* Blanco puro */
+  --negro: #000000;      /* Negro puro */
+  --gris: white;       /* Gris claro para fondo */
 }
 
+/* 🧼 Reset básico para todos los elementos */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0;              /* Elimina márgenes por defecto */
+  padding: 0;             /* Elimina relleno por defecto */
+  box-sizing: border-box; /* Incluye borde y relleno en el tamaño total */
 }
 
+/* 🧍 Estilo general del cuerpo del sitio */
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--gris);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow-x: hidden;
+  font-family: Arial, sans-serif;     /* Fuente principal */
+  background-color: var(--gris);      /* Fondo gris claro */
+  display: flex;                      /* Layout flexible */
+  flex-direction: column;            /* Apila elementos verticalmente */
+  min-height: 100vh;                 /* Altura mínima de pantalla completa */
+  overflow-x: hidden;                /* Oculta scroll horizontal */
 }
 
+/* 🔴 Barra superior principal (franja roja transparente) */
 .header {
-  background-color: var(--rojo);
-  color: var(--blanco);
-  padding: 20px 40px;
-  position: sticky;
+  background-color: rgb(163, 0, 0); /* Rojo con transparencia */
+  color: var(--blanco);                   /* Texto blanco */
+  padding: 2ch 20px;                     /* Espaciado interno */
+  position: sticky;                       /* Se queda fija arriba al hacer scroll */
   top: 0;
-  text-align: center;
+  display: flex;                          /* Layout horizontal */
+  align-items: center;                   /* Centra verticalmente */
+  justify-content: space-between;       /* Espacia entre logo y menú */
+  z-index: 1000;                         /* Prioridad alta en capas */
+  flex-wrap: wrap;                       /* Permite que los elementos bajen si no caben */
+  transition: transform 0.8s ease, opacity 0.8s ease; /* Animación al ocultarse */
+}
+
+/* 🖼️ Contenedor del logo y nombre */
+.logo-nombre {
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: transform 0.8s ease, opacity 0.8s ease;
+  gap: 15px; /* Espacio entre logo y texto */
 }
 
-/* Búsqueda minimalista */
-.busqueda-minimalista {
-  position: absolute;
-  left: 20px;
-  top: 25px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1rem;
-  color: var(--blanco);
-  font-style: italic;
-  cursor: pointer;
+/* 🖼️ Imagen del logo oficial */
+.logo-nuevo {
+  height: 100px;         /* Altura del logo */
+  width: auto;          /* Ancho automático */
+  object-fit: contain;  /* Ajusta sin recortar */
 }
 
-.icono-lupa {
-  width: 18px;
-  height: 18px;
-  fill: var(--blanco);
+.nombre-fundacion {
+
+  line-height: 1;
 }
 
-/* Título centrado */
 .titulo-principal {
-  font-size: 2rem;
+  font-size: 2rem; /* Tamaño principal */
   font-weight: bold;
 }
 
-/* Menú hamburguesa */
+.subtitulo {
+  font-size: 1.2rem; /* 👈 Más pequeño */
+  color: #ffffff;       /* Puedes ajustar el color si quieres que se vea más sutil */
+}
+
+/* 🍔 Icono del menú hamburguesa */
 .menu-icon {
   position: absolute;
   right: 20px;
@@ -72,6 +79,7 @@ body {
   z-index: 1002;
 }
 
+/* 🍔 Líneas del menú hamburguesa */
 .menu-icon div {
   width: 25px;
   height: 3px;
@@ -79,11 +87,57 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Panel lateral desde la derecha */
+/* 🔍 Contenedor de búsqueda y navegación */
+.busqueda-navegacion {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 50px; /* 👈 Puedes ajustar este valor */
+}
+
+/* 🔍 Estilo del buscador minimalista */
+.busqueda-minimalista {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: var(--blanco);
+  font-style: italic;
+  cursor: pointer;
+}
+
+/* 🔍 Icono de lupa */
+.icono-lupa {
+  width: 18px;
+  height: 18px;
+  fill: var(--blanco);
+}
+
+/* 📁 Menú horizontal con enlaces */
+.menu-horizontal-unido {
+  display: flex;
+  gap: 20px;
+}
+
+/* 📁 Estilo de los enlaces del menú */
+.menu-horizontal-unido a {
+  text-decoration: none;
+  color: var(--blanco);
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* 📁 Efecto hover en los enlaces */
+.menu-horizontal-unido a:hover {
+  text-decoration: underline;
+}
+
+/* 📋 Panel lateral oculto (menú desplegable) */
 .side-panel {
   position: fixed;
   top: 0;
-  right: -250px;
+  right: -250px; /* Oculto fuera de pantalla */
   width: 250px;
   height: 100%;
   background-color: var(--rojo);
@@ -94,15 +148,18 @@ body {
   padding-top: 80px;
 }
 
+/* 📋 Panel lateral visible */
 .side-panel.show {
   right: 0;
 }
 
+/* 📋 Menú dentro del panel lateral */
 .panel-menu {
   display: flex;
   flex-direction: column;
 }
 
+/* 📋 Enlaces del panel lateral */
 .panel-menu a {
   padding: 15px 20px;
   text-decoration: none;
@@ -111,11 +168,12 @@ body {
   border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
+/* 📋 Hover en enlaces del panel */
 .panel-menu a:hover {
   background-color: #900000;
 }
 
-/* Fondo oscuro */
+/* 🌒 Fondo oscuro detrás del panel lateral */
 .overlay {
   position: fixed;
   top: 0;
@@ -127,67 +185,22 @@ body {
   display: none;
 }
 
+/* 🌒 Mostrar fondo oscuro */
 .overlay.show {
   display: block;
 }
 
-/* Menú horizontal principal */
-.menu-horizontal {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  background-color: var(--blanco);
-  padding: 15px 0;
-  position: sticky;
-  top: 80px;
-  z-index: 999;
-  transition: transform 0.8s ease, opacity 0.8s ease;
-}
-
-
-.menu-horizontal a {
-  text-decoration: none;
-  color: var(--rojo);
-  font-weight: bold;
-  font-size: 1.1rem;
-}
-
-.menu-horizontal a:hover {
-  text-decoration: underline;
-}
-
-/* Contenido */
-.contenido {
-  flex: 1;
-  padding: 40px;
-  min-height: 600px; /* fuerza espacio para que el footer se vea */
-}
-
-
-/* Footer */
-.footer {
-  background-color: var(--negro);
-  color: var(--blanco);
-  text-align: center;
-  padding: 20px;
-  margin-top: auto;
-  z-index: 1;
-  position: relative;
-}
-
-
-/* Carrusel */
+/* 🖼️ Carrusel de imágenes */
 .carrusel {
   position: relative;
+  top: 0x; /* Sube el carrusel para que se vea detrás del header */
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
   z-index: 1;
 }
 
-
+/* 🖼️ Cada imagen del carrusel */
 .carousel-item {
   position: absolute;
   top: 0;
@@ -198,75 +211,39 @@ body {
   transition: opacity 1s ease-in-out;
 }
 
+/* 🖼️ Imagen activa del carrusel */
 .carousel-item.active {
   opacity: 1;
   z-index: 1;
 }
 
+/* 🖼️ Imagen dentro del carrusel */
 .carousel-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Texto sobre imagen */
-.carousel-caption {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 6px;
-}
 
-/* Cortina blanca que sube */
+/* 🧼 Cortina blanca que sube al hacer scroll */
 .cortina-blanca {
   position: fixed;
   bottom: -100vh;
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: var(--blanco);
-  z-index: 998; /* menor que el menú y el footer */
-  transition: bottom 0.8s ease;
-  pointer-events: none;
+  background-color: white;
+  transition: bottom 0.6s ease;
+  z-index: 0; /* 👈 Esto la pone detrás */
 }
 
 
-
-
-/* Cuando se activa el scroll */
-.header.scroll-up,
-.menu-horizontal.scroll-up {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
+/* 🧼 Mostrar cortina blanca */
 .cortina-blanca.show {
   bottom: 0;
 }
 
-.donar-fijo {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: linear-gradient(to right, var(--rojo), #457b9d);
-  color: white;
-  padding: 12px 20px;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 9999;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.donar-fijo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-}
+/* 📰 Sección de publicaciones destacadas */
 .publicaciones-destacadas {
   padding: 40px;
   background-color: var(--gris);
@@ -276,17 +253,20 @@ body {
   transition: opacity 1s ease, transform 1s ease;
 }
 
+/* 📰 Mostrar publicaciones con animación */
 .publicaciones-destacadas.show {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* 📰 Título de publicaciones destacadas */
 .publicaciones-destacadas h2 {
   font-size: 1.8rem;
   color: var(--rojo);
   margin-bottom: 30px;
 }
 
+/* 📰 Contenedor de tarjetas */
 .tarjetas-publicaciones {
   display: flex;
   justify-content: center;
@@ -294,6 +274,7 @@ body {
   flex-wrap: wrap;
 }
 
+/* 📰 Tarjeta individual */
 .tarjeta {
   background-color: var(--blanco);
   border-radius: 12px;
@@ -303,10 +284,12 @@ body {
   transition: transform 0.3s ease;
 }
 
+/* 📰 Efecto hover en tarjeta */
 .tarjeta:hover {
   transform: translateY(-5px);
 }
 
+/* 📰 Imagen dentro de la tarjeta */
 .tarjeta img {
   width: 100%;
   height: 160px;
@@ -315,28 +298,304 @@ body {
   margin-bottom: 15px;
 }
 
+/* 📰 Título de la tarjeta */
 .tarjeta h3 {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
   color: var(--rojo);
-  margin-bottom: 10px;
+  margin-bottom: 10;
 }
 
-.tarjeta p {
-  font-size: 0.95rem;
-  color: #333;
-  text-align: justify;
+  /* 📰 Título de la tarjeta */
+.tarjeta h3 {
+  font-size: 1.2rem;         /* Tamaño del título */
+  color: var(--rojo);        /* Color rojo institucional */
+  margin-bottom: 10px;       /* Espacio debajo del título */
 }
-.titulo-con-logo {
+
+/* 📰 Descripción de la tarjeta */
+.tarjeta p {
+  font-size: 0.95rem;        /* Tamaño del texto */
+  color: #333;               /* Gris oscuro para legibilidad */
+  text-align: justify;       /* Justifica el texto */
+}
+
+/* 📄 Sección principal de contenido */
+.contenido {
+  flex: 1;                   /* Ocupa el espacio restante vertical */
+  padding: 40px;             /* Espaciado interno */
+  min-height: 600px;         /* Altura mínima para que el footer no se superponga */
+}
+
+/* 🦶 Pie de página */
+.footer {
+  background-color: var(--negro);  /* Fondo negro */
+  color: var(--blanco);            /* Texto blanco */
+  text-align: center;              /* Centrado horizontal */
+  padding: 20px;                   /* Espaciado interno */
+  margin-top: auto;               /* Empuja el footer al final si hay poco contenido */
+  z-index: 1;
+  position: relative;
+}
+
+/* ❤️ Botón fijo de donación */
+.donar-fijo {
+  position: fixed;                        /* Fijo en pantalla */
+  bottom: 30px;                           /* Distancia desde abajo */
+  right: 30px;                            /* Distancia desde la derecha */
+  background: linear-gradient(to right, var(--rojo), #457b9d); /* Degradado rojo a azul */
+  color: white;                           /* Texto blanco */
+  padding: 12px 20px;                     /* Espaciado interno */
+  font-size: 1rem;                        /* Tamaño de fuente */
+  font-weight: bold;                     /* Negrita */
+  border-radius: 50px;                   /* Bordes redondeados tipo píldora */
+  text-decoration: none;                 /* Sin subrayado */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Sombra para profundidad */
+  z-index: 9999;                         /* Muy por encima de todo */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animación suave */
+}
+
+/* ❤️ Efecto hover en botón de donación */
+.donar-fijo:hover {
+  transform: scale(1.05);                /* Ligeramente más grande */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4); /* Sombra más intensa */
+}
+.iconos-sociales {
+  position: absolute;
+  right: 80px;          /* Alineado con el botón hamburguesa */
+  top: 27px;            /* Justo debajo del botón hamburguesa */
   display: flex;
-  align-items: center;
-  gap: 15px;
+  gap: 25px;            /* Espacio entre íconos */
+  z-index: 1002;
+}
+
+.iconos-sociales img {
+  width: 18px;          /* Tamaño del ícono */
+  height: 18px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.iconos-sociales img:hover {
+  transform: scale(1.1); /* Efecto al pasar el mouse */
+}
+.carousel-caption {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  z-index: 1001;
+  background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco transparente */
+  padding: 20px 24px;
+  text-align: left;
+  border-radius: 0; /* Sin bordes redondeados */
+  max-width: 500px; /* Puedes ajustar el ancho si lo quieres más grande */
+}
+
+.carousel-caption h3 {
+  color: #000000; /* Texto negro */
+  font-size: 28px; /* Título más grande */
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.carousel-caption p {
+  background-color: #160096; /* Fondo azul */
+  color: #ffffff;            /* Texto blanco */
+  font-size: 20px;           /* Subtítulo más grande */
+  padding: 10px 16px;
+  margin: 0;
+  display: inline-block;
+  border-radius: 0; /* Sin bordes redondeados */
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* 🧱 Sección Destacado */
+.publicaciones-destacadas {
+  padding: 100px 30px;
+  background-color: var(--gris);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.publicaciones-destacadas.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.publicaciones-destacadas h2 {
+  font-size: 2.2rem;
+  color: var(--rojo);
+  margin-bottom: 40px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Tarjetas distribuidas con espacio */
+.tarjetas-publicaciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 270px;
+  text-align: justify;
   justify-content: center;
 }
 
-.logo-header {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+/* Tarjeta individual */
+.tarjeta {
+  background-color: var(--blanco);
+  border: 1px solid #ddd;
+  box-shadow: 0 px 12px rgba(0,0,0,0.08);
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+ text-align: justify;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta:hover {
+  transform: translateY(-6px);
+ text-align: justify;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Imagen destacada */
+.tarjeta img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Título */
+.tarjeta h3 {
+  font-size: 1.4rem;
+  color: var(--rojo);
+  margin: 16px 20px 8px;
+  text-align: justify;
+  font-weight: bold;
+
+}
+
+/* Subtítulo */
+.tarjeta p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0 20px 20px;
+  text-align: justify;
+  font-style: italic;
+}
+.modal-donacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.contenido-donacion {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.contenido-donacion h2 {
+  color: #b70000;
+  margin-bottom: 10px;
+}
+
+.contenido-donacion p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.lista-donacion {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.lista-donacion li {
+  margin: 8px 0;
+}
+
+.lista-donacion a {
+  background-color: #0057B8;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.lista-donacion a:hover {
+  background-color: #003f8f;
+}
+
+.contenido-donacion button {
+  background-color: #b70000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* Modal base */
+.modal-donacion {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Contenido con animación */
+.modal-donacion .contenido-donacion {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slideUp 0.4s ease forwards;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

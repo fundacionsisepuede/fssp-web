@@ -7,6 +7,7 @@ const supabase = createClient(
 );
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // 🔐 Autenticación y perfil
   const perfilLateral = document.getElementById('perfil-lateral');
   const cerrarLateral = document.getElementById('cerrar-lateral');
   const loginLink = document.getElementById('login-link');
@@ -23,12 +24,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     avatar.style.objectFit = 'cover';
     avatar.style.marginBottom = '8px';
 
-    if (user.user_metadata?.avatar_url) {
-      avatar.src = user.user_metadata.avatar_url;
-    } else {
-      const inicial = user.email.charAt(0).toUpperCase();
-      avatar.src = `https://via.placeholder.com/50?text=${inicial}`;
-    }
+    avatar.src = user.user_metadata?.avatar_url
+      ? user.user_metadata.avatar_url
+      : `https://via.placeholder.com/50?text=${user.email.charAt(0).toUpperCase()}`;
 
     const saludo = document.createElement('p');
     saludo.textContent = '¡Bienvenido a Fundación Si Se Puede!';
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     cerrarLateral.appendChild(logoutBtn);
   }
 
-  // 💡 CARRUSEL DE PORTADAS
+  // 🖼️ Carrusel de portadas
   const cargarCarrusel = async () => {
     const { data, error } = await supabase
       .from('portadas')
@@ -74,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    carrusel.innerHTML = ''; // Limpiar contenido previo
+    carrusel.innerHTML = '';
 
     data.forEach((portada, index) => {
       const item = document.createElement('div');
@@ -83,9 +81,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       item.innerHTML = `
         <img src="${portada.imagen_url}" alt="${portada.titulo}" class="slide">
-        <div class="carousel-caption" style="position:absolute; bottom:20px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:10px; border-radius:6px;">
-          <h3 style="margin:0;">${portada.titulo}</h3>
-          <p style="margin:0;">${portada.subtitulo || ''}</p>
+        <div class="carousel-caption">
+          <h3 class="titulo-carrusel">${portada.titulo}</h3>
+          <p class="subtitulo-carrusel">${portada.subtitulo || ''}</p>
         </div>
       `;
       carrusel.appendChild(item);
@@ -102,11 +100,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   await cargarCarrusel();
-    const cargarPublicacionesDestacadas = async () => {
+
+  // 📰 Publicaciones destacadas
+  const cargarPublicacionesDestacadas = async () => {
     const { data, error } = await supabase
       .from('publicaciones')
-      .select('titulo, descripcion, imagen_url')
-      .order('created_at', { ascending: false })
+      .select('titulo, subtitulo, imagen_url, imagenes_url')
+      .order('fecha', { ascending: false })
       .limit(3);
 
     if (error) {
@@ -117,14 +117,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     const contenedor = document.getElementById("tarjetasPublicaciones");
     if (!contenedor || !data || data.length === 0) return;
 
+    contenedor.innerHTML = '';
+
     data.forEach(pub => {
+      let imagen = pub.imagen_url;
+
+      if (!imagen && Array.isArray(pub.imagenes_url) && pub.imagenes_url.length > 0) {
+        imagen = pub.imagenes_url[0];
+      }
+
+      if (!imagen) {
+        imagen = 'img/default.jpg';
+      }
+
       const tarjeta = document.createElement("div");
       tarjeta.className = "tarjeta";
       tarjeta.innerHTML = `
-        <img src="${pub.imagen_url}" alt="${pub.titulo}" />
+        <img src="${imagen}" alt="${pub.titulo}" />
         <h3>${pub.titulo}</h3>
-        <p>${pub.descripcion}</p>
+        <p>${pub.subtitulo || ''}</p>
       `;
+
       contenedor.appendChild(tarjeta);
     });
 
@@ -141,5 +154,39 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   await cargarPublicacionesDestacadas();
+  // ❤️ Modal de Donación con animación
+const abrirDonacion = () => {
+  const modal = document.getElementById('modal-donacion');
+  if (modal) {
+    modal.style.display = 'flex';
+
+    const contenido = modal.querySelector('.contenido-donacion');
+    if (contenido) {
+      contenido.style.animation = 'slideUp 0.4s ease forwards';
+    }
+  }
+};
+
+const cerrarDonacion = () => {
+  const modal = document.getElementById('modal-donacion');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const botonDonar = document.querySelector('.donar-fijo');
+  if (botonDonar) {
+    botonDonar.addEventListener('click', (e) => {
+      e.preventDefault();
+      abrirDonacion();
+    });
+  }
+
+  const botonCerrar = document.querySelector('#modal-donacion button');
+  if (botonCerrar) {
+    botonCerrar.addEventListener('click', cerrarDonacion);
+  }
+});
 
 });
