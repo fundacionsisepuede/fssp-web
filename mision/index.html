@@ -3,165 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Misión - Fundación Si Se Puede</title>
-  <style>
-    :root {
-      --rojo: #b70000;
-      --azul: #007bff;
-      --blanco: #ffffff;
-      --gris: #f2f2f2;
-      --negro: #000000;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: var(--gris);
-      color: var(--negro);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      background-color: var(--rojo);
-      color: var(--blanco);
-      padding: 20px;
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-      position: relative;
-    }
-
-    .menu-icon {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .menu-icon div {
-      width: 25px;
-      height: 3px;
-      background-color: var(--blanco);
-    }
-
-    .side-panel {
-      position: fixed;
-      top: 0;
-      right: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: var(--rojo);
-      color: var(--blanco);
-      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
-      transition: right 0.3s ease;
-      z-index: 1001;
-      padding-top: 60px;
-    }
-
-    .side-panel.show {
-      right: 0;
-    }
-
-    .panel-menu {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .panel-menu a {
-      padding: 15px 20px;
-      text-decoration: none;
-      color: var(--blanco);
-      font-weight: bold;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .panel-menu a:hover {
-      background-color: #900000;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 1000;
-      display: none;
-    }
-
-    .overlay.show {
-      display: block;
-    }
-
-    .contenido {
-      flex: 1;
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .contenido img {
-      width: 100%;
-      max-width: 600px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      margin-bottom: 30px;
-    }
-
-    .contenido h2 {
-      font-size: 2rem;
-      color: var(--rojo);
-      margin-bottom: 20px;
-    }
-
-    .contenido p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #333;
-      text-align: justify;
-    }
-
-    footer {
-      background-color: var(--negro);
-      color: var(--blanco);
-      text-align: center;
-      padding: 20px;
-    }
-  </style>
+  <title>Misión - Fundación Sí Se Puede</title>
+  <link rel="stylesheet" href="../main.css" />
+  <script type="module" src="../main.js"></script>
 </head>
+<style>
+  .contenido {
+    flex: 1;
+    padding: 60px 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  .contenido img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .contenido img:hover {
+    transform: scale(1.02);
+  }
+
+  .contenido h2 {
+    font-size: 2.4rem;
+    color: var(--rojo);
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .contenido p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    text-align: justify;
+    padding: 0 10px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
 <body>
-  <header>
-    Misión de la Fundación
-    <div class="menu-icon" onclick="togglePanel()">
-      <div></div>
-      <div></div>
-      <div></div>
+  <!-- Encabezado -->
+  <header class="header">
+    <div class="logo-nombre">
+      <img src="../src/logoblanco.png" alt="Logo Fundación" class="logo-nuevo" />
+      <h1 class="nombre-fundacion">
+        <span class="titulo-principal">Sí Se Puede:</span><br>
+        <span class="subtitulo">Ayuda real, cambio verdadero.</span>
+      </h1>
     </div>
+
+    <div class="menu-icon" onclick="togglePanel()">
+      <div></div><div></div><div></div>
+    </div>
+
+    <div class="busqueda-navegacion">
+      <nav class="menu-horizontal-unido">
+        <a href="../index.html">Inicio</a>
+        <a href="../mision/index.html">Misión</a>
+        <a href="../vision/index.html">Visión</a>
+        <a href="../somos/index.html">Quiénes Somos</a>
+        <a href="../contacto/index.html">Contáctanos</a>
+      </nav>
+
+      <div class="busqueda-minimalista">
+        <span class="buscar-texto">Buscar...</span>
+        <svg class="icono-lupa" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 
+          1.415-1.414l-3.85-3.85zm-5.242 1.106a5 5 0 1 1 
+          0-10 5 5 0 0 1 0 10z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div id="perfil-usuario" style="position: absolute; right: 60px; top: 15px;"></div>
   </header>
 
   <!-- Panel lateral -->
   <div class="overlay" id="overlay" onclick="closePanel()"></div>
-
   <div class="side-panel" id="sidePanel">
-    <nav class="panel-menu">
-      <a href="../index.html">Inicio</a>
-      <a href="../vision/index.html">Visión</a>
-      <a href="../somos/index.html">Quiénes Somos</a>
-      <a href="../contacto/index.html">Contáctanos</a>
+    <nav class="panel-menu" id="panel-menu">
+      <div id="perfil-lateral" style="text-align: center; padding: 10px;"></div>
+      <a href="../login/index.html" id="login-link">Iniciar Sesión</a>
       <a href="../editar portada/index.html">Editar Portada</a>
       <a href="../añadir publicaciones/index.html">Añadir Publicaciones</a>
       <a href="../publicaciones y feed/index.html">Publicaciones y Feed</a>
-      <a href="../login/index.html">Cerrar Sesión</a>
+      <div id="cerrar-lateral" style="text-align: center; margin-top: 20px;"></div>
     </nav>
   </div>
 
+  <!-- Íconos sociales -->
+  <div class="iconos-sociales">
+    <a href="https://instagram.com" target="_blank">
+      <img src="../src/instablanco.png" alt="Instagram" />
+    </a>
+    <a href="https://facebook.com" target="_blank">
+      <img src="../src/facebookblanco.png" alt="Facebook" />
+    </a>
+    <a href="tel:+593994418820">
+      <img src="../src/telefonoblanco.png" alt="Teléfono" />
+    </a>
+  </div>
+
+  <!-- Contenido principal -->
   <section class="contenido">
     <img src="../src/mision.jpg" alt="Imagen de misión" />
     <h2>Nuestra Misión</h2>
@@ -170,20 +129,38 @@
     </p>
   </section>
 
-  <footer>
-    © 2020 Fundación Si Se Puede
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 Fundación Sí Se Puede. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- Scripts -->
   <script>
     function togglePanel() {
-      document.getElementById('sidePanel').classList.toggle('show');
-      document.getElementById('overlay').classList.toggle('show');
-    }
+    document.getElementById('sidePanel').classList.toggle('show');
+    document.getElementById('overlay').classList.toggle('show');
+    document.querySelector('.iconos-sociales')?.classList.toggle('ocultar-redes');
+  }
 
-    function closePanel() {
-      document.getElementById('sidePanel').classList.remove('show');
-      document.getElementById('overlay').classList.remove('show');
+  function closePanel() {
+    document.getElementById('sidePanel').classList.remove('show');
+    document.getElementById('overlay').classList.remove('show');
+    document.querySelector('.iconos-sociales')?.classList.remove('ocultar-redes');
+  }
+
+  // ✨ Transición al hacer scroll
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const header = document.querySelector('.header');
+    const triggerPoint = 100; // Puedes ajustar este valor
+
+    if (scrollY > triggerPoint) {
+      const progress = Math.min((scrollY - triggerPoint) / 200, 1);
+      header.style.transform = `translateY(-${progress * 100}%)`;
+      header.style.opacity = `${1 - progress}`;
+    } else {
+      header.style.transform = `translateY(0%)`;
+      header.style.opacity = `1`;
     }
-  </script>
-</body>
-</html>
+  });
+</script>

@@ -11,7 +11,7 @@
   <!-- Encabezado -->
   <header class="header">
     <div class="logo-nombre">
-      <img src="src/sombra1.png" alt="Logo Fundación" class="logo-nuevo" />
+      <img src="src/logoblanco.png" alt="Logo Fundación" class="logo-nuevo" />
       <h1 class="nombre-fundacion">
         <span class="titulo-principal">Sí Se Puede:</span><br>
         <span class="subtitulo">Ayuda real, cambio verdadero.</span>
@@ -115,15 +115,17 @@
 
   <!-- Scripts -->
   <script>
-    function togglePanel() {
-      document.getElementById('sidePanel').classList.toggle('show');
-      document.getElementById('overlay').classList.toggle('show');
-    }
+   function togglePanel() {
+    document.getElementById('sidePanel').classList.toggle('show');
+    document.getElementById('overlay').classList.toggle('show');
+    document.querySelector('.iconos-sociales')?.classList.toggle('ocultar-redes');
+  }
 
-    function closePanel() {
-      document.getElementById('sidePanel').classList.remove('show');
-      document.getElementById('overlay').classList.remove('show');
-    }
+  function closePanel() {
+    document.getElementById('sidePanel').classList.remove('show');
+    document.getElementById('overlay').classList.remove('show');
+    document.querySelector('.iconos-sociales')?.classList.remove('ocultar-redes');
+  }
 
     function abrirDonacion() {
       document.getElementById('modal-donacion').style.display = 'flex';

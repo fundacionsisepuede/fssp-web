@@ -599,3 +599,10 @@ body {
     opacity: 1;
   }
 }
+/* Oculta redes sociales cuando se abre el menú hamburguesa */
+.ocultar-redes {
+  display: none !important;
+}
+.header {
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}

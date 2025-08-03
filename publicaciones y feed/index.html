@@ -3,33 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Publicaciones - Fundación Si Se Puede</title>
+  <title>Publicaciones - Fundación Sí Se Puede</title>
+  <link rel="stylesheet" href="../main.css" />
   <style>
-    :root {
-      --rojo: #b70000;
-      --azul: #007bff;
-      --blanco: #ffffff;
-      --gris: #f2f2f2;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: var(--gris);
-    }
-
-    header {
-      background-color: var(--rojo);
-      color: var(--blanco);
-      padding: 20px;
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
+    /* Estilos personalizados para publicaciones */
     .feed-container {
-      max-width: 800px;
-      margin: 30px auto;
+      max-width: 1000px;
+      margin: 120px auto 40px;
       padding: 0 20px;
     }
 
@@ -96,7 +76,6 @@
       height: auto;
       scroll-snap-align: center;
       margin-right: 10px;
-      border-radius: 0;
     }
 
     .card-options {
@@ -146,16 +125,15 @@
     }
 
     #edit-modal .modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;         /* Limita el alto al 90% de la ventana */
-  overflow-y: auto;         /* Permite scroll vertical si el contenido es largo */
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
 
     #edit-modal input, #edit-modal textarea {
       width: 100%;
@@ -185,7 +163,68 @@
   </style>
 </head>
 <body>
-  <header>Publicaciones de la Fundación</header>
+  <!-- Encabezado -->
+  <header class="header">
+    <div class="logo-nombre">
+      <img src="../src/logoblanco.png" alt="Logo Fundación" class="logo-nuevo" />
+      <h1 class="nombre-fundacion">
+        <span class="titulo-principal">Sí Se Puede:</span><br>
+        <span class="subtitulo">Ayuda real, cambio verdadero.</span>
+      </h1>
+    </div>
+
+    <div class="menu-icon" onclick="togglePanel()">
+      <div></div><div></div><div></div>
+    </div>
+
+    <div class="busqueda-navegacion">
+      <nav class="menu-horizontal-unido">
+        <a href="../index.html">Inicio</a>
+        <a href="../mision/index.html">Misión</a>
+        <a href="../vision/index.html">Visión</a>
+        <a href="../somos/index.html">Quiénes Somos</a>
+        <a href="../contacto/index.html">Contáctanos</a>
+      </nav>
+
+      <div class="busqueda-minimalista">
+        <span class="buscar-texto">Buscar...</span>
+        <svg class="icono-lupa" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242 1.106a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div id="perfil-usuario" style="position: absolute; right: 60px; top: 15px;"></div>
+  </header>
+
+  <!-- Panel lateral -->
+  <div class="overlay" id="overlay" onclick="closePanel()"></div>
+  <div class="side-panel" id="sidePanel">
+    <nav class="panel-menu" id="panel-menu">
+      <div id="perfil-lateral" style="text-align: center; padding: 10px;"></div>
+      <a href="../login/index.html" id="login-link">Iniciar Sesión</a>
+      <a href="../editar portada/index.html">Editar Portada</a>
+      <a href="../añadir publicaciones/index.html">Añadir Publicaciones</a>
+      <a href="../publicaciones y feed/index.html">Publicaciones y Feed</a>
+      <div id="cerrar-lateral" style="text-align: center; margin-top: 20px;"></div>
+    </nav>
+  </div>
+
+  <!-- Íconos sociales -->
+  <div class="iconos-sociales">
+    <a href="https://instagram.com" target="_blank">
+      <img src="../src/instablanco.png" alt="Instagram" />
+    </a>
+    <a href="https://facebook.com" target="_blank">
+      <img src="../src/facebookblanco.png" alt="Facebook" />
+    </a>
+    <a href="tel:+593994418820">
+      <img src="../src/telefonoblanco.png" alt="Teléfono" />
+    </a>
+  </div>
+
+  <!-- Título y publicaciones -->
+  <h2 style="text-align:center; margin-top:140px;">Publicaciones de la Fundación</h2>
   <div class="feed-container" id="feed"></div>
 
   <!-- Modal de edición -->
@@ -202,10 +241,11 @@
       <div id="edit-galeria"></div>
       <div id="edit-previewImagenes" style="margin-top:1rem;"></div>
       <button id="update-btn">✅ Actualizar publicación</button>
-      <button onclick="document.getElementById('edit-modal').style.display='none'">Cancelar</button>
+      <button onclick="document.getElementById('edit-modal').style.display='none'">Cancelar      </button>
     </div>
   </div>
 
+  <!-- Script principal -->
   <script type="module">
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -224,7 +264,7 @@
 
       if (error) {
         feed.innerHTML = `<p class="no-data">❌ Error al cargar publicaciones: ${error.message}</p>`;
-        console.error('Error al cargar publicaciones:', error);
+        console.error(error);
         return;
       }
 
@@ -238,15 +278,11 @@
         card.className = 'card';
 
         let imagenesHTML = '';
-
-        if (pub.imagenes_url && Array.isArray(pub.imagenes_url)) {
-          imagenesHTML = `
-            <div class="carrusel">
-              ${pub.imagenes_url.map(url => `<img src="${url}" alt="Imagen de publicación">`).join('')}
-            </div>
-          `;
-        } else if (pub.imagen_url) {
-          imagenesHTML = `<img src="${pub.imagen_url}" alt="Imagen de publicación">`;
+        const imagenes = pub.imagenes_url || (pub.imagen_url ? [pub.imagen_url] : []);
+        if (imagenes.length > 1) {
+          imagenesHTML = `<div class="carrusel">${imagenes.map(url => `<img src="${url}" alt="Imagen">`).join('')}</div>`;
+        } else if (imagenes.length === 1) {
+          imagenesHTML = `<img src="${imagenes[0]}" alt="Imagen">`;
         }
 
         card.innerHTML = `
@@ -265,52 +301,41 @@
           </div>
         `;
 
+        // Opciones
         const optionsBtn = card.querySelector('.options-btn');
         const optionsMenu = card.querySelector('.options-menu');
         optionsBtn.onclick = () => {
-          optionsMenu.style.display = optionsMenu.style.display === 'none' ? 'block' : 'none';
+          optionsMenu.style.display = optionsMenu.style.display === 'block' ? 'none' : 'block';
         };
 
-        const deleteBtn = card.querySelector('.delete-btn');
-        deleteBtn.onclick = async () => {
-          const confirmDelete = confirm('¿Eliminar esta publicación? Esto no borra las imágenes de la nube.');
-          if (!confirmDelete) return;
-
-          const { error } = await supabase
-            .from('publicaciones')
-            .delete()
-                        .eq('id', pub.id);
-
+        // Eliminar
+        card.querySelector('.delete-btn').onclick = async () => {
+          if (!confirm('¿Eliminar esta publicación?')) return;
+          const { error } = await supabase.from('publicaciones').delete().eq('id', pub.id);
           if (error) {
-            alert('❌ Error al eliminar publicación');
+            alert('❌ Error al eliminar');
             console.error(error);
           } else {
-            alert('✅ Publicación eliminada');
+            alert('✅ Eliminada');
             card.remove();
           }
         };
 
-        const editBtn = card.querySelector('.edit-btn');
-        editBtn.onclick = async () => {
+        // Editar
+        card.querySelector('.edit-btn').onclick = async () => {
           document.getElementById('edit-modal').style.display = 'flex';
           document.getElementById('edit-titulo').value = pub.titulo || '';
           document.getElementById('edit-subtitulo').value = pub.subtitulo || '';
           document.getElementById('edit-descripcion').value = pub.descripcion || '';
-
           const galeriaEdit = document.getElementById('edit-galeria');
           const previewEdit = document.getElementById('edit-previewImagenes');
           galeriaEdit.innerHTML = '';
           previewEdit.innerHTML = '';
-          window.imagenesEditadas = [];
+          window.imagenesEditadas = [...imagenes];
 
-          const imagenesActuales = pub.imagenes_url || (pub.imagen_url ? [pub.imagen_url] : []);
-          imagenesActuales.forEach(url => {
-            window.imagenesEditadas.push(url);
-          });
           mostrarPreviewEdit();
 
           const { data: archivos, error: galeriaError } = await supabase.storage.from('portada').list('', { limit: 100 });
-
           if (galeriaError || !Array.isArray(archivos)) {
             galeriaEdit.innerHTML = '<p>Error al cargar imágenes</p>';
             return;
@@ -326,7 +351,6 @@
                 mostrarPreviewEdit();
               }
             };
-
             const img = document.createElement('img');
             img.src = urlData.publicUrl;
             contenedor.appendChild(img);
@@ -400,11 +424,47 @@
 
     cargarPublicaciones();
 
+    // Cerrar modal al hacer clic fuera
     window.onclick = function(event) {
-      if (event.target === document.getElementById('edit-modal')) {
-        document.getElementById('edit-modal').style.display = 'none';
+  if (event.target === document.getElementById('edit-modal')) {
+    document.getElementById('edit-modal').style.display = 'none';
+  }
+};
+
+    // Transición al hacer scroll
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const header = document.querySelector('.header');
+      const triggerPoint = 100;
+
+      if (scrollY > triggerPoint) {
+        const progress = Math.min((scrollY - triggerPoint) / 200, 1);
+        header.style.transform = `translateY(-${progress * 100}%)`;
+        header.style.opacity = `${1 - progress}`;
+      } else {
+        header.style.transform = `translateY(0%)`;
+        header.style.opacity = `1`;
       }
-    };
+    });
   </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 Fundación Sí Se Puede. Todos los derechos reservados.</p>
+  </footer>
+  <script>
+  function togglePanel() {
+    document.getElementById('sidePanel').classList.toggle('show');
+    document.getElementById('overlay').classList.toggle('show');
+    document.querySelector('.iconos-sociales')?.classList.toggle('ocultar-redes');
+  }
+
+  function closePanel() {
+    document.getElementById('sidePanel').classList.remove('show');
+    document.getElementById('overlay').classList.remove('show');
+    document.querySelector('.iconos-sociales')?.classList.remove('ocultar-redes');
+  }
+</script>
+
 </body>
 </html>
