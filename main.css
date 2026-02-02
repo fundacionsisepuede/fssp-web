@@ -73,6 +73,7 @@ body {
   right: 20px;
   top: 25px;
   display: flex;
+  display: none !important; /* 👈 oculta el menú hamburguesa */
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -190,34 +191,29 @@ body {
   display: block;
 }
 
-/* 🖼️ Carrusel de imágenes */
 .carrusel {
   position: relative;
-  top: 0x; /* Sube el carrusel para que se vea detrás del header */
   width: 100vw;
-  height: 100vh;
+  height: 600px;   /* 👈 altura más delgada, ajusta a tu gusto */
   overflow: hidden;
   z-index: 1;
 }
 
-/* 🖼️ Cada imagen del carrusel */
+
 .carousel-item {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
 
-/* 🖼️ Imagen activa del carrusel */
 .carousel-item.active {
   opacity: 1;
   z-index: 1;
 }
 
-/* 🖼️ Imagen dentro del carrusel */
 .carousel-item img {
   width: 100%;
   height: 100%;
@@ -605,4 +601,256 @@ body {
 }
 .header {
   transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+
+
+
+
+/* Grid de publicaciones */
+.grid-publicaciones {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 👈 siempre 4 columnas */
+  gap: 20px;
+}
+
+/* Tarjeta */
+.tarjeta {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.2);
+}
+
+/* Imagen con overlay */
+.tarjeta img,
+.tarjeta video {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.tarjeta:hover img,
+.tarjeta:hover video {
+  transform: scale(1.05);
+}
+
+.tarjeta::before {
+  content: "";
+  position: absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 30%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* 👈 evita bloquear el click */
+}
+
+.tarjeta:hover::before {
+  opacity: 1;
+}
+
+/* Contenido */
+.tarjeta h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--rojo);
+  margin: 15px;
+  z-index: 2;
+  position: relative;
+}
+
+.tarjeta p {
+  font-size: 0.95rem;
+  color: #444;
+  margin: 0 15px 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;   /* 👈 solo 2 líneas en tarjetas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 2;
+}
+
+/* Botón dentro de tarjeta */
+.tarjeta .btn-ver {
+  margin: 10px 15px 20px;
+  padding: 8px 14px;
+  background: var(--rojo);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.tarjeta .btn-ver:hover {
+  background: #a00000;
+}
+
+/* Modal (contenedor centrado) */
+.modal {
+  display: none;              /* oculto por defecto */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;    /* 👈 centra horizontal */
+  align-items: center;        /* 👈 centra vertical */
+  z-index: 9999;
+  backdrop-filter: blur(4px); /* opcional: efecto blur */
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 1100px;
+  width: 92%;
+  display: flex;
+  gap: 30px;
+  padding: 35px;
+  position: relative;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  animation: zoomIn 0.4s ease;
+}
+
+/* Animación */
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Carrusel dentro del modal */
+.carousel-modal {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* 👈 evita que se vean varios a la vez */
+}
+
+.carousel-item-modal {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease; /* 👈 transición suave */
+}
+
+.carousel-item-modal.active {
+  opacity: 1; /* 👈 solo el activo se ve */
+  position: relative;
+}
+
+.carousel-item-modal img,
+.carousel-item-modal video {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background-color: #000;
+  border-radius: 10px;
+}
+
+
+/* Botones carrusel */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: #fff;
+  background: rgba(0,0,0,0.4);
+  border-radius: 50%;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+/* Texto con scroll */
+.modal-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.modal-texto h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--rojo);
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--rojo);
+  padding-bottom: 8px;
+}
+
+.modal-texto p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.7;
+  white-space: pre-line; /* 👈 respeta saltos de línea */
+}
+.close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+  z-index: 10000; /* 👈 asegura que quede arriba de todo */
+}
+
+.close:hover {
+  color: var(--rojo);
+}
+.publicaciones h2 {
+  text-align: center;
+  font-size: 2.4rem;
+  margin: 60px 0 40px;   /* 👈 más espacio arriba (60px) y abajo (40px) */
+  color: var(--rojo);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.publicaciones h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--rojo);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+.publicaciones {
+  padding: 60px 40px 100px;  /* 👈 más espacio abajo (100px) */
+  background: linear-gradient(180deg, #f9f9f9 0%, #f1f1f1 100%);
 }

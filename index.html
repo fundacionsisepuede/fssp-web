@@ -43,37 +43,100 @@
     <div id="perfil-usuario" style="position: absolute; right: 60px; top: 15px;"></div>
   </header>
 
-  <!-- Carrusel -->
-  <div class="carrusel" id="carrusel">
-    <div class="carousel-item active">
-      <img src="tu-imagen.jpg" alt="Imagen destacada" />
-      <div class="carousel-caption">Bienvenidos a la Fundación</div>
+<!-- Carrusel de portadas -->
+<div id="carrusel" class="carrusel">
+  <div class="carousel-item active">
+    <img src="src/Portada-1.jpeg" alt="Portada 1" />
+  </div>
+  <div class="carousel-item">
+    <img src="src/Portada-2.jpeg" alt="Portada 2" />
+  </div>
+  <div class="carousel-item">
+    <img src="src/Portada-3.jpeg" alt="Portada 3" />
+  </div>
+  <div class="carousel-item">
+    <img src="src/Portada-4.jpeg" alt="Portada 4" />
+  </div>
+</div>
+
+<section id="publicaciones" class="publicaciones">
+  <h2>Publicaciones Destacadas</h2>
+  <div class="grid-publicaciones">
+
+    <!-- Publicación 1 -->
+    <div class="tarjeta" data-id="1">
+      <img src="src/encuentro-deportivo.jpeg" alt="Encuentro deportivo" />
+      <h3>Impulso al deporte comunitario a través del auspicio deportivo</h3>
+      <p>Como parte de su compromiso con el desarrollo social y la integración comunitaria, la fundación realizó la entrega de indumentaria y equipamiento deportivo...</p>
+    </div>
+
+    <!-- Publicación 2 -->
+    <div class="tarjeta" data-id="2">
+      <img src="src/capacitacion-emprendedoras.jpeg" alt="Capacitación emprendedoras" />
+      <h3>Clausura del programa de capacitación para emprendedoras</h3>
+      <p>La Fundación Sí Se Puede llevó a cabo la clausura del programa de formación dirigido a mujeres emprendedoras, brindando herramientas prácticas...</p>
+    </div>
+
+    <!-- Publicación 3 -->
+    <div class="tarjeta" data-id="3">
+      <img src="src/ayuda-social.jpeg" alt="Ayuda social" />
+      <h3>Jornada de atención social comunitaria</h3>
+      <p>La Fundación Sí Se Puede desarrolló una jornada de atención social dirigida a familias del sector, brindando apoyo directo y acompañamiento comunitario...</p>
+    </div>
+
+    <!-- Publicación 4 -->
+    <div class="tarjeta" data-id="4">
+      <img src="src/entrega.jpeg" alt="Entrega ayuda humanitaria" />
+      <h3>Entrega de ayuda humanitaria a familias en situación de vulnerabilidad</h3>
+      <p>La Fundación Sí Se Puede realizó la entrega de ayuda humanitaria a una familia del sector, brindando insumos básicos para la atención y cuidado...</p>
+    </div>
+
+    <!-- Publicación 5 -->
+    <div class="tarjeta" data-id="5">
+      <video src="src/video-silla.mp4" muted></video>
+      <h3>Entrega de silla de ruedas para mejorar la movilidad y autonomía</h3>
+      <p>Se realizó la entrega de una silla de ruedas a una persona adulta mayor, brindándole mayor independencia y calidad de vida...</p>
+    </div>
+
+    <!-- Publicación 6 -->
+    <div class="tarjeta" data-id="6">
+      <video src="src/video--ayuda.mp4" muted></video>
+      <h3>Sentimos la política en Acción y la Acción en humanidad !!!</h3>
+      <p>La dignidad de nuestros adultos mayores no se discute, se defiende. Menos discursos, MÁS ayuda...</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Modal corregido -->
+<div id="modal-publicacion" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <!-- Columna izquierda: carrusel -->
+    <div class="carousel-modal"></div>
+
+    <!-- Columna derecha: texto -->
+    <div class="modal-texto">
+      <h3 id="modal-titulo"></h3>
+      <p id="modal-descripcion"></p>
     </div>
   </div>
+</div>
 
-  <!-- Cortina blanca -->
-  <div class="cortina-blanca" id="cortina"></div>
-
-  <!-- Sección Destacado -->
-  <section class="publicaciones-destacadas" id="publicacionesDestacadas">
-    <h2>Destacado</h2>
-    <div class="tarjetas-publicaciones" id="tarjetasPublicaciones">
-      <!-- Tarjetas dinámicas -->
-    </div>
-  </section>
-
-  <!-- Panel lateral -->
-  <div class="overlay" id="overlay" onclick="closePanel()"></div>
-  <div class="side-panel" id="sidePanel">
-    <nav class="panel-menu" id="panel-menu">
-      <div id="perfil-lateral" style="text-align: center; padding: 10px;"></div>
-      <a href="login/index.html" id="login-link">Iniciar Sesión</a>
-      <a href="editar portada/index.html">Editar Portada</a>
-      <a href="añadir publicaciones/index.html">Añadir Publicaciones</a>
-      <a href="publicaciones y feed/index.html">Publicaciones y Feed</a>
-      <div id="cerrar-lateral" style="text-align: center; margin-top: 20px;"></div>
-    </nav>
-  </div>
+<!-- Panel lateral -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="side-panel" id="sidePanel">
+  <nav class="panel-menu" id="panel-menu">
+    <div id="perfil-lateral" style="text-align: center; padding: 10px;"></div>
+    <a href="login/index.html" id="login-link">Iniciar Sesión</a>
+    <a href="editar portada/index.html">Editar Portada</a>
+    <a href="añadir publicaciones/index.html">Añadir Publicaciones</a>
+    <a href="publicaciones y feed/index.html">Publicaciones y Feed</a>
+    <div id="cerrar-lateral" style="text-align: center; margin-top: 20px;"></div>
+  </nav>
+</div>
 
   <!-- Íconos sociales -->
   <div class="iconos-sociales">
