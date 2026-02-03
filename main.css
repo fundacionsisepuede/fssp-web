@@ -854,3 +854,37 @@ body {
   padding: 60px 40px 100px;  /* 👈 más espacio abajo (100px) */
   background: linear-gradient(180deg, #f9f9f9 0%, #f1f1f1 100%);
 }
+/* 📱 Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .grid-publicaciones {
+    grid-template-columns: 1fr; /* 👈 una sola columna en móvil */
+  }
+
+  .carrusel {
+    height: 300px; /* 👈 más pequeño en móvil */
+  }
+
+  .tarjetas-publicaciones {
+    gap: 20px; /* 👈 espacio normal entre tarjetas */
+  }
+
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .menu-horizontal-unido {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-content {
+    flex-direction: column; /* 👈 modal en columna para que no se corte */
+    width: 95%;
+    padding: 20px;
+  }
+
+  .modal-texto {
+    max-height: none; /* 👈 deja que el texto fluya */
+  }
+}
