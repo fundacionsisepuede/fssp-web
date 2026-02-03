@@ -191,6 +191,12 @@ Apoyamos a nuestros Adultos mayores con implemento de aseo personal, escuchamos 
     // texto en la columna derecha
     modalTitulo.textContent = pub.titulo;
 modalDescripcion.textContent = pub.descripcion;
+  // 📌 Abrir modal automáticamente según parámetro en la URL
+  const params = new URLSearchParams(window.location.search);
+  const modalId = params.get("modal");
+  if (modalId && publicaciones[modalId]) {
+    abrirModalPub(modalId);
+  }
 
 
     // carrusel en la columna izquierda
