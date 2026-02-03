@@ -854,37 +854,52 @@ body {
   padding: 60px 40px 100px;  /* 👈 más espacio abajo (100px) */
   background: linear-gradient(180deg, #f9f9f9 0%, #f1f1f1 100%);
 }
-/* 📱 Ajustes para pantallas pequeñas */
+
+
+
+/* 📱 Ajustes responsivos para el modal en pantallas pequeñas */
 @media (max-width: 768px) {
-  .grid-publicaciones {
-    grid-template-columns: 1fr; /* 👈 una sola columna en móvil */
-  }
-
-  .carrusel {
-    height: 300px; /* 👈 más pequeño en móvil */
-  }
-
-  .tarjetas-publicaciones {
-    gap: 20px; /* 👈 espacio normal entre tarjetas */
-  }
-
-  .header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .menu-horizontal-unido {
-    flex-direction: column;
-    gap: 10px;
-  }
-
   .modal-content {
-    flex-direction: column; /* 👈 modal en columna para que no se corte */
-    width: 95%;
+    flex-direction: column;   /* 👈 apila carrusel y texto */
+    width: 95%;               /* 👈 ocupa casi todo el ancho */
+    max-height: 90vh;         /* 👈 máximo 90% de la altura de pantalla */
+    overflow-y: auto;         /* 👈 permite scroll si se pasa */
+    gap: 20px;                /* 👈 menos espacio entre columnas */
     padding: 20px;
   }
 
+  .carousel-modal {
+    width: 100%;
+    max-height: 40vh;         /* 👈 carrusel más pequeño en móvil */
+  }
+
+  .carousel-item-modal img,
+  .carousel-item-modal video {
+    width: 100%;
+    height: auto;
+    max-height: 40vh;         /* 👈 evita que se corte */
+    object-fit: contain;
+  }
+
   .modal-texto {
-    max-height: none; /* 👈 deja que el texto fluya */
+    width: 100%;
+    max-height: 40vh;         /* 👈 texto ocupa la otra mitad */
+    overflow-y: auto;         /* 👈 scroll si es largo */
+    padding-right: 5px;
+  }
+
+  .modal-texto h3 {
+    font-size: 1.4rem;        /* 👈 título más pequeño */
+  }
+
+  .modal-texto p {
+    font-size: 0.9rem;        /* 👈 texto más compacto */
+    line-height: 1.4;
+  }
+
+  .close {
+    top: 8px;
+    right: 12px;
+    font-size: 24px;          /* 👈 botón cerrar más pequeño */
   }
 }
