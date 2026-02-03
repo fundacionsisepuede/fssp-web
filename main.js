@@ -155,7 +155,7 @@ Estas acciones fortalecen la integración social y promueven mejores condiciones
     titulo: "Entrega de ayuda humanitaria a familias en situación de vulnerabilidad",
     descripcion: `La Fundación Sí Se Puede realizó la entrega de ayuda humanitaria a una familia del sector, brindando insumos básicos para la atención y cuidado de la primera infancia. 
 Esta acción forma parte del compromiso institucional de apoyar a quienes más lo necesitan y contribuir al bienestar familiar.`,
-    media: ["src/entrega.jpeg"]
+    media: ["src/Entrega.jpeg"]
   },
   5: {
     titulo: "Entrega de silla de ruedas para mejorar la movilidad y autonomía",
@@ -191,12 +191,6 @@ Apoyamos a nuestros Adultos mayores con implemento de aseo personal, escuchamos 
     // texto en la columna derecha
     modalTitulo.textContent = pub.titulo;
 modalDescripcion.textContent = pub.descripcion;
-  // 📌 Abrir modal automáticamente según parámetro en la URL
-  const params = new URLSearchParams(window.location.search);
-  const modalId = params.get("modal");
-  if (modalId && publicaciones[modalId]) {
-    abrirModalPub(modalId);
-  }
 
 
     // carrusel en la columna izquierda
@@ -252,5 +246,12 @@ modalDescripcion.textContent = pub.descripcion;
       if (carruselInterval) clearInterval(carruselInterval);
     }
   });
+  // 📌 Abrir modal automáticamente según parámetro en la URL
+const params = new URLSearchParams(window.location.search);
+const modalId = params.get("modal");
+if (modalId && publicaciones[modalId]) {
+  abrirModalPub(modalId);
+}
+
 });
 
