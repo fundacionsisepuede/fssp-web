@@ -860,28 +860,29 @@ body {
 /* 📱 Modal full screen en móviles */
 @media (max-width: 768px) {
   .modal {
-    align-items: flex-start;   /* 👈 empieza arriba */
-    overflow-y: auto;          /* 👈 scroll general si se pasa */
-    padding: 10px;
+    align-items: flex-start;   /* empieza arriba */
+    padding: 0;
+    overflow-y: auto;          /* scroll general */
   }
 
   .modal-content {
-    flex-direction: column;    /* 👈 apila carrusel y texto */
-    width: 100%;               /* 👈 ocupa todo el ancho */
-    max-width: none;           /* 👈 sin límite de ancho */
-    height: auto;              /* 👈 altura automática */
-    max-height: none;          /* 👈 deja crecer */
-    margin: 0;                 /* 👈 sin márgenes */
-    border-radius: 0;          /* 👈 sin esquinas redondeadas */
-    padding: 15px;
+    flex-direction: column;    /* apila carrusel y texto */
+    width: 100%;               /* ocupa todo el ancho */
+    height: 100vh;             /* ocupa toda la altura */
+    max-height: 100vh;         /* no se corta */
+    margin: 0;
+    border-radius: 0;          /* sin esquinas redondeadas */
+    padding: 10px;
   }
 
   .carousel-modal {
     width: 100%;
-    max-height: 40vh;          /* 👈 carrusel ocupa parte superior */
+    max-height: 40vh;          /* carrusel ocupa parte superior */
   }
 
-  .carousel-item-modal img,
+  .carousel-item-modal img,    
+
+  
   .carousel-item-modal video {
     width: 100%;
     height: auto;
@@ -891,9 +892,10 @@ body {
 
   .modal-texto {
     width: 100%;
-    max-height: none;          /* 👈 deja crecer */
-    overflow-y: auto;          /* 👈 scroll si el texto es largo */
-    padding: 10px 0;
+    flex: 1;                   /* ocupa el resto del espacio */
+    max-height: 60vh;          /* texto ocupa parte inferior */
+    overflow-y: auto;          /* scroll si es largo */
+    padding: 10px;
   }
 
   .modal-texto h3 {

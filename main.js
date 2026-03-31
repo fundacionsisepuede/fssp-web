@@ -180,6 +180,22 @@ Apoyamos a nuestros Adultos mayores con implemento de aseo personal, escuchamos 
 #HechosNoPalabras
 #Mas`,
     media: ["src/video--ayuda.mp4"]
+  },
+
+  7: {
+    titulo: "Construir no es solo levantar paredes, es levantar esperanza",
+    descripcion: `Hoy, gracias a esta donación de cemento, seguimos trabajando donde más se necesita. Aquí no hay promesas vacías, hay acciones reales que transforman vidas.
+
+Mientras algunos hablan, nosotros actuamos. ¡Porque ayudar no es campaña, es compromiso!
+
+#SiSePuede
+#AlternativaSocial
+#HechosNoPalabras
+#Solidaridad
+#CompromisoReal
+#JuntosConstruimos
+#MasAccionMenosPalabras`,
+    media: ["src/donacion-cemento1.mp4"]
   }
 };
 
