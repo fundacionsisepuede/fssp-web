@@ -610,9 +610,10 @@ body {
 /* Grid de publicaciones */
 .grid-publicaciones {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 👈 siempre 4 columnas */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
+
 
 /* Tarjeta */
 .tarjeta {
@@ -859,30 +860,20 @@ body {
 
 /* 📱 Modal full screen en móviles */
 @media (max-width: 768px) {
-  .modal {
-    align-items: flex-start;   /* empieza arriba */
-    padding: 0;
-    overflow-y: auto;          /* scroll general */
-  }
-
   .modal-content {
-    flex-direction: column;    /* apila carrusel y texto */
-    width: 100%;               /* ocupa todo el ancho */
-    height: 100vh;             /* ocupa toda la altura */
-    max-height: 100vh;         /* no se corta */
-    margin: 0;
-    border-radius: 0;          /* sin esquinas redondeadas */
-    padding: 10px;
+    flex-direction: column;
+    width: 95%;          /* ocupa casi todo el ancho */
+    height: auto;        /* deja que crezca según contenido */
+    max-height: 90vh;    /* nunca más alto que la pantalla */
+    padding: 15px;
+    border-radius: 8px;
   }
 
   .carousel-modal {
-    width: 100%;
-    max-height: 40vh;          /* carrusel ocupa parte superior */
+    max-height: 40vh;
   }
 
-  .carousel-item-modal img,    
-
-  
+  .carousel-item-modal img,
   .carousel-item-modal video {
     width: 100%;
     height: auto;
@@ -891,25 +882,17 @@ body {
   }
 
   .modal-texto {
-    width: 100%;
-    flex: 1;                   /* ocupa el resto del espacio */
-    max-height: 60vh;          /* texto ocupa parte inferior */
-    overflow-y: auto;          /* scroll si es largo */
-    padding: 10px;
+    max-height: 50vh;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    line-height: 1.4;
   }
 
   .modal-texto h3 {
     font-size: 1.2rem;
   }
 
-  .modal-texto p {
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
   .close {
-    top: 10px;
-    right: 10px;
     font-size: 22px;
   }
 }
