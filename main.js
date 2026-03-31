@@ -195,7 +195,7 @@ Mientras algunos hablan, nosotros actuamos. ¡Porque ayudar no es campaña, es c
 #CompromisoReal
 #JuntosConstruimos
 #MasAccionMenosPalabras`,
-    media: ["src/donacion-cemento1.mp4"]
+    media: ["src/donacion-cemento2.mp4"]
   }
 };
 
