@@ -835,12 +835,19 @@ body.modal-abierto {
   }
 
   .carousel-modal {
-    min-height: 220px;
+    flex: none;         /* que NO compita por espacio con .modal-texto */
+    min-height: 0;
+    width: 100%;
+  }
+
+  .modal-texto {
+    flex: 1;
+    min-height: 0;      /* permite que el texto se achique y use su propio scroll */
   }
 
   .carousel-item-modal img,
   .carousel-item-modal video {
-    max-height: 45vh;
+    max-height: 40vh;   /* algo más bajo en móvil, deja aire para los controles */
   }
 
   .modal-texto h3 {
