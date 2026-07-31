@@ -1,210 +1,233 @@
-/* 🎨 Variables de color para usar en todo el sitio */
+/* ============================================================
+   FUNDACIÓN SÍ SE PUEDE — hoja de estilos
+   ============================================================ */
+
+/* 🎨 Variables globales */
 :root {
-  --rojo: #b70000;       /* Rojo institucional */
-  --blanco: white;     /* Blanco puro */
-  --negro: #000000;      /* Negro puro */
-  --gris: white;       /* Gris claro para fondo */
+  --rojo: #b70000;
+  --rojo-oscuro: #8a0000;
+  --azul: #160096;
+  --blanco: #ffffff;
+  --negro: #0d0d0d;
+  --fondo: #f6f4f1;
+  --texto: #2a2a2a;
+  --texto-suave: #62605e;
+  --borde: #e7e3dd;
+  --sombra: rgba(20, 10, 10, 0.12);
+  --fuente-titulos: 'Poppins', 'Segoe UI', sans-serif;
+  --fuente-texto: 'Inter', 'Segoe UI', sans-serif;
 }
 
-/* 🧼 Reset básico para todos los elementos */
+/* 🧼 Reset básico */
 * {
-  margin: 0;              /* Elimina márgenes por defecto */
-  padding: 0;             /* Elimina relleno por defecto */
-  box-sizing: border-box; /* Incluye borde y relleno en el tamaño total */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* 🧍 Estilo general del cuerpo del sitio */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;     /* Fuente principal */
-  background-color: var(--gris);      /* Fondo gris claro */
-  display: flex;                      /* Layout flexible */
-  flex-direction: column;            /* Apila elementos verticalmente */
-  min-height: 100vh;                 /* Altura mínima de pantalla completa */
-  overflow-x: hidden;                /* Oculta scroll horizontal */
+  font-family: var(--fuente-texto);
+  background-color: var(--fondo);
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* 🔴 Barra superior principal (franja roja transparente) */
+/* Evita el scroll del fondo cuando hay un modal abierto */
+body.modal-abierto {
+  overflow: hidden;
+}
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
 .header {
-  background-color: rgb(163, 0, 0); /* Rojo con transparencia */
-  color: var(--blanco);                   /* Texto blanco */
-  padding: 2ch 20px;                     /* Espaciado interno */
-  position: sticky;                       /* Se queda fija arriba al hacer scroll */
+  background-color: var(--rojo);
+  color: var(--blanco);
+  padding: 18px 24px;
+  position: sticky;
   top: 0;
-  display: flex;                          /* Layout horizontal */
-  align-items: center;                   /* Centra verticalmente */
-  justify-content: space-between;       /* Espacia entre logo y menú */
-  z-index: 1000;                         /* Prioridad alta en capas */
-  flex-wrap: wrap;                       /* Permite que los elementos bajen si no caben */
-  transition: transform 0.8s ease, opacity 0.8s ease; /* Animación al ocultarse */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  flex-wrap: wrap;
+  gap: 12px;
+  transition: opacity 0.3s ease;
 }
 
-/* 🖼️ Contenedor del logo y nombre */
 .logo-nombre {
   display: flex;
   align-items: center;
-  gap: 15px; /* Espacio entre logo y texto */
+  gap: 15px;
 }
 
-/* 🖼️ Imagen del logo oficial */
 .logo-nuevo {
-  height: 100px;         /* Altura del logo */
-  width: auto;          /* Ancho automático */
-  object-fit: contain;  /* Ajusta sin recortar */
+  height: 72px;
+  width: auto;
+  object-fit: contain;
 }
 
 .nombre-fundacion {
-
-  line-height: 1;
+  line-height: 1.25;
+  font-family: var(--fuente-titulos);
 }
 
 .titulo-principal {
-  font-size: 2rem; /* Tamaño principal */
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 .subtitulo {
-  font-size: 1.2rem; /* 👈 Más pequeño */
-  color: #ffffff;       /* Puedes ajustar el color si quieres que se vea más sutil */
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* 🍔 Icono del menú hamburguesa */
+/* 🍔 Menú hamburguesa */
 .menu-icon {
   position: absolute;
   right: 20px;
-  top: 25px;
+  top: 24px;
   display: flex;
-  display: none !important; /* 👈 oculta el menú hamburguesa */
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
   z-index: 1002;
+  padding: 6px;
 }
 
-/* 🍔 Líneas del menú hamburguesa */
 .menu-icon div {
   width: 25px;
   height: 3px;
+  border-radius: 2px;
   background-color: var(--blanco);
   transition: all 0.3s ease;
 }
 
-/* 🔍 Contenedor de búsqueda y navegación */
+/* 🔍 Navegación + búsqueda */
 .busqueda-navegacion {
   display: flex;
   align-items: center;
   gap: 30px;
   flex-wrap: wrap;
-  margin-top: 50px; /* 👈 Puedes ajustar este valor */
+  margin-left: auto;
+  margin-right: 70px;
 }
 
-/* 🔍 Estilo del buscador minimalista */
 .busqueda-minimalista {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--blanco);
   font-style: italic;
   cursor: pointer;
 }
 
-/* 🔍 Icono de lupa */
 .icono-lupa {
   width: 18px;
   height: 18px;
   fill: var(--blanco);
 }
 
-/* 📁 Menú horizontal con enlaces */
 .menu-horizontal-unido {
   display: flex;
-  gap: 20px;
+  gap: 22px;
 }
 
-/* 📁 Estilo de los enlaces del menú */
 .menu-horizontal-unido a {
   text-decoration: none;
   color: var(--blanco);
-  font-weight: bold;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  padding-bottom: 3px;
 }
 
-/* 📁 Efecto hover en los enlaces */
-.menu-horizontal-unido a:hover {
-  text-decoration: underline;
+.menu-horizontal-unido a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: var(--blanco);
+  transition: width 0.25s ease;
 }
 
-/* 📋 Panel lateral oculto (menú desplegable) */
+.menu-horizontal-unido a:hover::after {
+  width: 100%;
+}
+
+/* 📋 Panel lateral */
 .side-panel {
   position: fixed;
   top: 0;
-  right: -250px; /* Oculto fuera de pantalla */
-  width: 250px;
+  right: -270px;
+  width: 270px;
   height: 100%;
-  background-color: var(--rojo);
+  background-color: var(--rojo-oscuro);
   color: var(--blanco);
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
-  transition: right 0.3s ease;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.3);
+  transition: right 0.35s ease;
   z-index: 1001;
   padding-top: 80px;
 }
 
-/* 📋 Panel lateral visible */
 .side-panel.show {
   right: 0;
 }
 
-/* 📋 Menú dentro del panel lateral */
 .panel-menu {
   display: flex;
   flex-direction: column;
 }
 
-/* 📋 Enlaces del panel lateral */
 .panel-menu a {
-  padding: 15px 20px;
+  padding: 16px 22px;
   text-decoration: none;
   color: var(--blanco);
-  font-weight: bold;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  transition: background-color 0.2s ease;
 }
 
-/* 📋 Hover en enlaces del panel */
 .panel-menu a:hover {
-  background-color: #900000;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* 🌒 Fondo oscuro detrás del panel lateral */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
   display: none;
 }
 
-/* 🌒 Mostrar fondo oscuro */
 .overlay.show {
   display: block;
 }
 
+/* ============================================================
+   CARRUSEL DE PORTADAS
+   ============================================================ */
 .carrusel {
   position: relative;
-  width: 100vw;
-  height: 600px;   /* 👈 altura más delgada, ajusta a tu gusto */
+  width: 100%;
+  height: 600px;
   overflow: hidden;
-  z-index: 1;
 }
-
 
 .carousel-item {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -220,152 +243,352 @@ body {
   object-fit: cover;
 }
 
-
-/* 🧼 Cortina blanca que sube al hacer scroll */
-.cortina-blanca {
-  position: fixed;
-  bottom: -100vh;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: white;
-  transition: bottom 0.6s ease;
-  z-index: 0; /* 👈 Esto la pone detrás */
-}
-
-
-/* 🧼 Mostrar cortina blanca */
-.cortina-blanca.show {
-  bottom: 0;
-}
-
-/* 📰 Sección de publicaciones destacadas */
-.publicaciones-destacadas {
-  padding: 40px;
-  background-color: var(--gris);
-  text-align: center;
+/* ============================================================
+   PUBLICACIONES — SECCIÓN Y TARJETAS
+   ============================================================ */
+.publicaciones {
+  padding: 70px 6vw 100px;
   opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* 📰 Mostrar publicaciones con animación */
-.publicaciones-destacadas.show {
+.publicaciones.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* 📰 Título de publicaciones destacadas */
-.publicaciones-destacadas h2 {
-  font-size: 1.8rem;
+.publicaciones h2 {
+  text-align: center;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 45px;
   color: var(--rojo);
-  margin-bottom: 30px;
-}
-
-/* 📰 Contenedor de tarjetas */
-.tarjetas-publicaciones {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-/* 📰 Tarjeta individual */
-.tarjeta {
-  background-color: var(--blanco);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 280px;
-  padding: 20px;
-  transition: transform 0.3s ease;
-}
-
-/* 📰 Efecto hover en tarjeta */
-.tarjeta:hover {
-  transform: translateY(-5px);
-}
-
-/* 📰 Imagen dentro de la tarjeta */
-.tarjeta img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-/* 📰 Título de la tarjeta */
-.tarjeta h3 {
-    font-size: 1.2rem;
-  color: var(--rojo);
-  margin-bottom: 10;
-}
-
-  /* 📰 Título de la tarjeta */
-.tarjeta h3 {
-  font-size: 1.2rem;         /* Tamaño del título */
-  color: var(--rojo);        /* Color rojo institucional */
-  margin-bottom: 10px;       /* Espacio debajo del título */
-}
-
-/* 📰 Descripción de la tarjeta */
-.tarjeta p {
-  font-size: 0.95rem;        /* Tamaño del texto */
-  color: #333;               /* Gris oscuro para legibilidad */
-  text-align: justify;       /* Justifica el texto */
-}
-
-/* 📄 Sección principal de contenido */
-.contenido {
-  flex: 1;                   /* Ocupa el espacio restante vertical */
-  padding: 40px;             /* Espaciado interno */
-  min-height: 600px;         /* Altura mínima para que el footer no se superponga */
-}
-
-/* 🦶 Pie de página */
-.footer {
-  background-color: var(--negro);  /* Fondo negro */
-  color: var(--blanco);            /* Texto blanco */
-  text-align: center;              /* Centrado horizontal */
-  padding: 20px;                   /* Espaciado interno */
-  margin-top: auto;               /* Empuja el footer al final si hay poco contenido */
-  z-index: 1;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   position: relative;
 }
 
-/* ❤️ Botón fijo de donación */
-.donar-fijo {
-  position: fixed;                        /* Fijo en pantalla */
-  bottom: 30px;                           /* Distancia desde abajo */
-  right: 30px;                            /* Distancia desde la derecha */
-  background: linear-gradient(to right, var(--rojo), #457b9d); /* Degradado rojo a azul */
-  color: white;                           /* Texto blanco */
-  padding: 12px 20px;                     /* Espaciado interno */
-  font-size: 1rem;                        /* Tamaño de fuente */
-  font-weight: bold;                     /* Negrita */
-  border-radius: 50px;                   /* Bordes redondeados tipo píldora */
-  text-decoration: none;                 /* Sin subrayado */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Sombra para profundidad */
-  z-index: 9999;                         /* Muy por encima de todo */
-  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animación suave */
+.publicaciones h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--rojo);
+  margin: 14px auto 0;
+  border-radius: 2px;
 }
 
-/* ❤️ Efecto hover en botón de donación */
-.donar-fijo:hover {
-  transform: scale(1.05);                /* Ligeramente más grande */
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4); /* Sombra más intensa */
+.grid-publicaciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
 }
+
+.tarjeta {
+  background-color: var(--blanco);
+  border-radius: 16px;
+  border: 1px solid var(--borde);
+  box-shadow: 0 6px 18px var(--sombra);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta:hover,
+.tarjeta:focus-visible {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 32px var(--sombra);
+}
+
+.tarjeta-media {
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-media img,
+.tarjeta-media video {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.tarjeta:hover .tarjeta-media img,
+.tarjeta:hover .tarjeta-media video {
+  transform: scale(1.06);
+}
+
+/* Degradado suave sobre la imagen/video para legibilidad de la etiqueta */
+.tarjeta-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, transparent 45%);
+}
+
+/* Etiqueta de categoría */
+.etiqueta {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-family: var(--fuente-titulos);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+/* Ícono de reproducción sobre tarjetas de video */
+.tarjeta-video .tarjeta-media::before {
+  content: '▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--rojo);
+  border-radius: 50%;
+  font-size: 1rem;
+  padding-left: 3px;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.tarjeta-video:hover .tarjeta-media::before {
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+.tarjeta h3 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--negro);
+  margin: 16px 18px 8px;
+  line-height: 1.3;
+}
+
+.tarjeta p {
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+  margin: 0 18px 14px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.btn-ver {
+  margin: auto 18px 18px;
+  align-self: flex-start;
+  padding: 8px 16px;
+  background: var(--rojo);
+  color: var(--blanco);
+  border-radius: 24px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 0.25s ease;
+}
+
+.tarjeta:hover .btn-ver {
+  background: var(--rojo-oscuro);
+}
+
+/* ============================================================
+   MODAL DE PUBLICACIÓN
+   ============================================================ */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 5, 5, 0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--blanco);
+  border-radius: 18px;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  gap: 30px;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  animation: zoomIn 0.35s ease;
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.carousel-modal {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+  min-height: 260px;
+}
+
+.carousel-item-modal {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.carousel-item-modal.active {
+  opacity: 1;
+  position: relative;
+}
+
+.carousel-item-modal img,
+.carousel-item-modal video {
+  width: 100%;
+  height: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  background-color: #000;
+  border-radius: 12px;
+}
+
+.modal-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.modal-etiqueta {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-family: var(--fuente-titulos);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.modal-texto h3 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--rojo);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+
+.modal-texto p {
+  font-size: 1rem;
+  color: var(--texto);
+  line-height: 1.7;
+  white-space: pre-line;
+  margin-bottom: 20px;
+}
+
+.btn-copiar-link {
+  margin-top: auto;
+  align-self: flex-start;
+  background: var(--azul);
+  color: var(--blanco);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.btn-copiar-link:hover {
+  background: #0f0070;
+  transform: translateY(-2px);
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--texto-suave);
+  transition: color 0.25s ease;
+  z-index: 10000;
+}
+
+.close:hover {
+  color: var(--rojo);
+}
+
+/* ============================================================
+   BOTÓN E ÍCONOS FIJOS
+   ============================================================ */
+.donar-fijo {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: linear-gradient(to right, var(--rojo), var(--azul));
+  color: var(--blanco);
+  padding: 13px 22px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.donar-fijo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
 .iconos-sociales {
   position: absolute;
-  right: 80px;          /* Alineado con el botón hamburguesa */
-  top: 27px;            /* Justo debajo del botón hamburguesa */
+  right: 80px;
+  top: 26px;
   display: flex;
-  gap: 25px;            /* Espacio entre íconos */
+  gap: 22px;
   z-index: 1002;
 }
 
 .iconos-sociales img {
-  width: 18px;          /* Tamaño del ícono */
+  width: 18px;
   height: 18px;
   object-fit: contain;
   cursor: pointer;
@@ -373,526 +596,239 @@ body {
 }
 
 .iconos-sociales img:hover {
-  transform: scale(1.1); /* Efecto al pasar el mouse */
-}
-.carousel-caption {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  z-index: 1001;
-  background-color: rgba(255, 255, 255, 0.85); /* Fondo blanco transparente */
-  padding: 20px 24px;
-  text-align: left;
-  border-radius: 0; /* Sin bordes redondeados */
-  max-width: 500px; /* Puedes ajustar el ancho si lo quieres más grande */
+  transform: scale(1.15);
 }
 
-.carousel-caption h3 {
-  color: #000000; /* Texto negro */
-  font-size: 28px; /* Título más grande */
-  font-weight: bold;
-  margin-bottom: 12px;
+.ocultar-redes {
+  display: none !important;
 }
 
-.carousel-caption p {
-  background-color: #160096; /* Fondo azul */
-  color: #ffffff;            /* Texto blanco */
-  font-size: 20px;           /* Subtítulo más grande */
-  padding: 10px 16px;
-  margin: 0;
-  display: inline-block;
-  border-radius: 0; /* Sin bordes redondeados */
-}
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-/* 🧱 Sección Destacado */
-.publicaciones-destacadas {
-  padding: 100px 30px;
-  background-color: var(--gris);
-  text-align: center;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 1s ease, transform 1s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.publicaciones-destacadas.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.publicaciones-destacadas h2 {
-  font-size: 2.2rem;
-  color: var(--rojo);
-  margin-bottom: 40px;
-  text-align: center;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Tarjetas distribuidas con espacio */
-.tarjetas-publicaciones {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 270px;
-  text-align: justify;
-  justify-content: center;
-}
-
-/* Tarjeta individual */
-.tarjeta {
-  background-color: var(--blanco);
-  border: 1px solid #ddd;
-  box-shadow: 0 px 12px rgba(0,0,0,0.08);
-  border-radius: 8px;
- text-align: justify;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.tarjeta:hover {
-  transform: translateY(-6px);
- text-align: justify;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-/* Imagen destacada */
-.tarjeta img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-/* Título */
-.tarjeta h3 {
-  font-size: 1.4rem;
-  color: var(--rojo);
-  margin: 16px 20px 8px;
-  text-align: justify;
-  font-weight: bold;
-
-}
-
-/* Subtítulo */
-.tarjeta p {
-  font-size: 1rem;
-  color: #333;
-  margin: 0 20px 20px;
-  text-align: justify;
-  font-style: italic;
-}
+/* ============================================================
+   MODAL DE DONACIÓN
+   ============================================================ */
 .modal-donacion {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.6);
   display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease forwards;
+  padding: 20px;
 }
 
-.contenido-donacion {
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
+.modal-donacion .contenido-donacion {
+  background: var(--blanco);
+  padding: 32px;
+  border-radius: 14px;
   text-align: center;
   max-width: 400px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  width: 100%;
+  transform: translateY(30px);
+  opacity: 0;
+  animation: slideUp 0.4s ease forwards;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 
 .contenido-donacion h2 {
-  color: #b70000;
+  font-family: var(--fuente-titulos);
+  color: var(--rojo);
   margin-bottom: 10px;
 }
 
 .contenido-donacion p {
   margin-bottom: 20px;
   font-size: 1rem;
+  color: var(--texto-suave);
 }
 
 .lista-donacion {
   list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-.lista-donacion li {
-  margin: 8px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
 }
 
 .lista-donacion a {
-  background-color: #0057B8;
-  color: white;
-  padding: 8px 16px;
+  background-color: var(--azul);
+  color: var(--blanco);
+  padding: 9px 16px;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
   display: inline-block;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease;
 }
 
 .lista-donacion a:hover {
-  background-color: #003f8f;
+  background-color: #0f0070;
 }
 
 .contenido-donacion button {
-  background-color: #b70000;
-  color: white;
+  background-color: var(--rojo);
+  color: var(--blanco);
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  padding: 10px 22px;
+  border-radius: 24px;
+  font-weight: 600;
   cursor: pointer;
-}
-/* Modal base */
-.modal-donacion {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease forwards;
+  transition: background 0.25s ease;
 }
 
-/* Contenido con animación */
-.modal-donacion .contenido-donacion {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 400px;
-  transform: translateY(30px);
-  opacity: 0;
-  animation: slideUp 0.4s ease forwards;
+.contenido-donacion button:hover {
+  background-color: var(--rojo-oscuro);
 }
 
-/* Animaciones */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-/* Oculta redes sociales cuando se abre el menú hamburguesa */
-.ocultar-redes {
-  display: none !important;
-}
-.header {
-  transition: transform 0.8s ease, opacity 0.8s ease;
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
-
-
-
-
-/* Grid de publicaciones */
-.grid-publicaciones {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-
-/* Tarjeta */
-.tarjeta {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.tarjeta:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.2);
-}
-
-/* Imagen con overlay */
-.tarjeta img,
-.tarjeta video {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.tarjeta:hover img,
-.tarjeta:hover video {
-  transform: scale(1.05);
-}
-
-.tarjeta::before {
-  content: "";
-  position: absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.5) 30%, transparent 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none; /* 👈 evita bloquear el click */
-}
-
-.tarjeta:hover::before {
-  opacity: 1;
-}
-
-/* Contenido */
-.tarjeta h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--rojo);
-  margin: 15px;
-  z-index: 2;
-  position: relative;
-}
-
-.tarjeta p {
-  font-size: 0.95rem;
-  color: #444;
-  margin: 0 15px 15px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;   /* 👈 solo 2 líneas en tarjetas */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
-  z-index: 2;
-}
-
-/* Botón dentro de tarjeta */
-.tarjeta .btn-ver {
-  margin: 10px 15px 20px;
-  padding: 8px 14px;
-  background: var(--rojo);
-  color: #fff;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  background-color: var(--negro);
+  color: var(--blanco);
   text-align: center;
-  transition: background 0.3s ease;
-  position: relative;
-  z-index: 2;
-}
-
-.tarjeta .btn-ver:hover {
-  background: #a00000;
-}
-
-/* Modal (contenedor centrado) */
-.modal {
-  display: none;              /* oculto por defecto */
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.75);
-  justify-content: center;    /* 👈 centra horizontal */
-  align-items: center;        /* 👈 centra vertical */
-  z-index: 9999;
-  backdrop-filter: blur(4px); /* opcional: efecto blur */
-}
-
-.modal-content {
-  background: #fff;
-  border-radius: 16px;
-  max-width: 1100px;
-  width: 92%;
-  display: flex;
-  gap: 30px;
-  padding: 35px;
-  position: relative;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
-  animation: zoomIn 0.4s ease;
-}
-
-/* Animación */
-@keyframes zoomIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* Carrusel dentro del modal */
-.carousel-modal {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* 👈 evita que se vean varios a la vez */
-}
-
-.carousel-item-modal {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.6s ease; /* 👈 transición suave */
-}
-
-.carousel-item-modal.active {
-  opacity: 1; /* 👈 solo el activo se ve */
+  padding: 22px;
+  margin-top: auto;
   position: relative;
 }
 
-.carousel-item-modal img,
-.carousel-item-modal video {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: contain;
-  background-color: #000;
-  border-radius: 10px;
+/* ============================================================
+   RESPONSIVE — TABLET
+   ============================================================ */
+@media (max-width: 992px) {
+  .grid-publicaciones {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .carrusel {
+    height: 440px;
+  }
+
+  .modal-content {
+    max-width: 90vw;
+  }
 }
 
-
-/* Botones carrusel */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  color: #fff;
-  background: rgba(0,0,0,0.4);
-  border-radius: 50%;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.carousel-btn:hover {
-  background: rgba(0,0,0,0.7);
-}
-
-.carousel-btn.prev { left: 10px; }
-.carousel-btn.next { right: 10px; }
-
-/* Texto con scroll */
-.modal-texto {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  max-height: 500px;
-  overflow-y: auto;
-  padding-right: 10px;
-}
-
-.modal-texto h3 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--rojo);
-  margin-bottom: 15px;
-  border-bottom: 2px solid var(--rojo);
-  padding-bottom: 8px;
-}
-
-.modal-texto p {
-  font-size: 1rem;
-  color: #333;
-  line-height: 1.7;
-  white-space: pre-line; /* 👈 respeta saltos de línea */
-}
-.close {
-  position: absolute;
-  top: 12px;
-  right: 18px;
-  font-size: 28px;
-  cursor: pointer;
-  color: #666;
-  transition: color 0.3s ease;
-  z-index: 10000; /* 👈 asegura que quede arriba de todo */
-}
-
-.close:hover {
-  color: var(--rojo);
-}
-.publicaciones h2 {
-  text-align: center;
-  font-size: 2.4rem;
-  margin: 60px 0 40px;   /* 👈 más espacio arriba (60px) y abajo (40px) */
-  color: var(--rojo);
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  position: relative;
-}
-
-.publicaciones h2::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  background: var(--rojo);
-  margin: 12px auto 0;
-  border-radius: 2px;
-}
-.publicaciones {
-  padding: 60px 40px 100px;  /* 👈 más espacio abajo (100px) */
-  background: linear-gradient(180deg, #f9f9f9 0%, #f1f1f1 100%);
-}
-
-
-
-/* 📱 Modal full screen en móviles */
+/* ============================================================
+   RESPONSIVE — MÓVIL
+   ============================================================ */
 @media (max-width: 768px) {
+  .header {
+    padding: 14px 16px 14px 16px;
+    justify-content: flex-start;
+  }
+
+  .logo-nuevo {
+    height: 52px;
+  }
+
+  .titulo-principal {
+    font-size: 1.15rem;
+  }
+
+  .subtitulo {
+    font-size: 0.8rem;
+  }
+
+  /* En móvil, la navegación completa vive en el panel lateral */
+  .busqueda-navegacion {
+    display: none;
+  }
+
+  .menu-icon {
+    position: static;
+    margin-left: auto;
+  }
+
+  .iconos-sociales {
+    right: 60px;
+    top: 20px;
+    gap: 14px;
+  }
+
+  .carrusel {
+    height: 300px;
+  }
+
+  .publicaciones {
+    padding: 48px 5vw 70px;
+  }
+
+  .grid-publicaciones {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .tarjeta h3 {
+    font-size: 0.98rem;
+    margin: 12px 14px 6px;
+  }
+
+  .tarjeta p {
+    font-size: 0.85rem;
+    margin: 0 14px 10px;
+    -webkit-line-clamp: 3;
+  }
+
+  .btn-ver {
+    margin: auto 14px 14px;
+  }
+
+  /* El modal pasa a una sola columna en móvil */
   .modal-content {
     flex-direction: column;
-    width: 95%;          /* ocupa casi todo el ancho */
-    height: auto;        /* deja que crezca según contenido */
-    max-height: 90vh;    /* nunca más alto que la pantalla */
-    padding: 15px;
-    border-radius: 8px;
+    max-width: 95vw;
+    max-height: 92vh;
+    padding: 20px;
+    gap: 18px;
+    overflow-y: auto;
   }
 
   .carousel-modal {
-    max-height: 40vh;
+    min-height: 220px;
   }
 
   .carousel-item-modal img,
   .carousel-item-modal video {
-    width: 100%;
-    height: auto;
-    max-height: 40vh;
-    object-fit: contain;
-  }
-
-  .modal-texto {
-    max-height: 50vh;
-    overflow-y: auto;
-    font-size: 0.9rem;
-    line-height: 1.4;
+    max-height: 45vh;
   }
 
   .modal-texto h3 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
-  .close {
-    font-size: 22px;
+  .donar-fijo {
+    bottom: 16px;
+    right: 16px;
+    padding: 11px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .grid-publicaciones {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .titulo-principal {
+    font-size: 1rem;
+  }
+
+  .subtitulo {
+    font-size: 0.72rem;
   }
 }
