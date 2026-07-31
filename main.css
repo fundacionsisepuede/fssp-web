@@ -437,6 +437,7 @@ body.modal-abierto {
   position: relative;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   animation: zoomIn 0.35s ease;
+  min-width: 0; /* evita que el video "empuje" el modal más ancho que su límite */
 }
 
 @keyframes zoomIn {
@@ -446,18 +447,21 @@ body.modal-abierto {
 
 .carousel-modal {
   flex: 1;
+  min-width: 0; /* clave: sin esto, un ítem flex no se achica por debajo del tamaño
+                   natural de su contenido y el video se sale del recuadro negro */
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
   background: #000;
   min-height: 220px;
-  /* sin overflow:hidden — así los controles nativos del video nunca quedan recortados */
+  overflow: hidden; /* red de seguridad: nada puede salirse ya del recuadro negro */
 }
 
 .carousel-item-modal {
   display: none;
   width: 100%;
+  min-width: 0;
   align-items: center;
   justify-content: center;
 }
@@ -466,16 +470,17 @@ body.modal-abierto {
   display: flex;
 }
 
-/* width/height en "auto" para que el elemento tome exactamente el tamaño
-   de la imagen/video ya escalado — así los controles nativos (play, volumen,
-   pantalla completa, barra de tiempo) quedan siempre dentro del recuadro
-   visible, sin importar si el video es horizontal, cuadrado o vertical. */
+/* El video/imagen SIEMPRE ocupa el 100% del ancho disponible del recuadro negro
+   (ya correctamente acotado gracias a min-width:0 arriba) y su alto se calcula
+   automáticamente según su proporción real, topado por max-height. Así el
+   elemento nunca es más grande que su contenedor y los controles nativos
+   (play, volumen, pantalla completa, barra de tiempo) quedan siempre visibles
+   y dentro del recuadro, sin importar si el video es horizontal, cuadrado o vertical. */
 .carousel-item-modal img,
 .carousel-item-modal video {
   display: block;
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 100%;
   max-height: 65vh;
   object-fit: contain;
   background-color: #000;
