@@ -34,7 +34,7 @@ Estas acciones fortalecen la integración social y promueven mejores condiciones
     titulo: 'Entrega de ayuda humanitaria a familias en situación de vulnerabilidad',
     descripcion: `La Fundación Sí Se Puede realizó la entrega de ayuda humanitaria a una familia del sector, brindando insumos básicos para la atención y cuidado de la primera infancia. 
 Esta acción forma parte del compromiso institucional de apoyar a quienes más lo necesitan y contribuir al bienestar familiar.`,
-    media: ['src/entrega.jpeg']
+    media: ['src/Entrega.jpeg']
   },
   5: {
     categoria: 'Movilidad',
